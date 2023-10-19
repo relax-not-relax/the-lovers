@@ -1,0 +1,35 @@
+.giftDiv {
+  margin-bottom: 20px !important;
+  background: #ffe2e5;
+  padding: 8px;
+  border-radius: 15px !important;
+  max-width: 750px;
+  &__img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .giftTitle {
+    background: #fdf0f0;
+    padding: 20px;
+    border-radius: 10px;
+
+    &__name {
+      font-size: 20px !important;
+      font-weight: 500;
+    }
+
+    &__des {
+      font-weight: 300;
+    }
+  }
+
+  .cancelBtnDiv {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

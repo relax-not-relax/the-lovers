@@ -1,0 +1,19 @@
+.registerForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 30px 30px 30px !important;
+  border: 1px solid #ccc;
+
+  &__img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__btn {
+    margin: 25px 0 10px 0 !important;
+    background: #1f4172 !important;
+    padding: 10px 0 !important;
+  }
+}

@@ -1,0 +1,31 @@
+.loginForm {
+  padding: 10px 30px 30px 30px !important;
+  border: 1px solid #ccc;
+
+  &__btn {
+    margin: 25px 0 10px 0 !important;
+    background: #1f4172 !important;
+    padding: 10px 0 !important;
+  }
+
+  &__pg {
+    margin-bottom: 20px !important;
+  }
+}
+
+.signUpDiv {
+  //width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 20px 0 !important;
+  margin-top: 15px !important;
+
+  &__link {
+    text-decoration: none !important;
+    margin-left: 8px !important;
+    color: #4787e2 !important;
+    font-weight: 500;
+  }
+}

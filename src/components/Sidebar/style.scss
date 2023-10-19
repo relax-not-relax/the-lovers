@@ -1,0 +1,53 @@
+.sideBar {
+  height: 100vh;
+  width: 330px;
+  padding: 0 20px !important;
+  position: sticky;
+  top: 0;
+  left: 0;
+  border-right: 1px solid #ccc;
+}
+
+.sideBarList {
+  height: auto;
+  padding: 0;
+  width: 100%;
+  margin: 0 !important;
+
+  .row {
+    width: 85%;
+    height: 50px;
+    list-style-type: none;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    color: #132043;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px !important;
+    padding: 8px 0;
+    margin-bottom: 15px !important;
+
+    &:hover {
+      cursor: pointer;
+      background: #e7e7e738;
+    }
+
+    &#active {
+      background: #132043;
+      color: #fff;
+    }
+
+    .icon {
+      flex: 20%;
+      display: grid;
+      place-items: center;
+    }
+
+    .title {
+      flex: 70%;
+      font-size: 18px !important;
+      font-weight: 500;
+    }
+  }
+}

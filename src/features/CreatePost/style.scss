@@ -1,0 +1,23 @@
+.createSection {
+  min-width: 900px !important;
+  padding: 50px 35px !important;
+
+  &__hd {
+    text-align: center !important;
+    font-size: 25px !important;
+    font-weight: 700 !important;
+    margin-bottom: 60px !important;
+  }
+
+  .contentArea {
+    margin-top: 15px;
+    border-radius: 5px !important;
+    border: 1px solid #ccc !important;
+    font-size: 14px !important;
+  }
+
+  .createBtn {
+    height: 50px !important;
+    background: #132043 !important;
+  }
+}
