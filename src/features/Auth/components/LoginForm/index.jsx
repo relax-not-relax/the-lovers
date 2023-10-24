@@ -1,7 +1,7 @@
 import React from 'react';
 //import PropTypes from 'prop-types';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button } from '@mui/material';
+import { Box, Button, LinearProgress } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom/cjs/react-router-dom';
 import * as yup from 'yup';
@@ -34,11 +34,11 @@ function LoginForm(props) {
     });
 
     const handleSubmit = async (values) => {
-        console.log('LOGIN FORM: ', values);
-        // const { onSubmit } = props;
-        // if (onSubmit) {
-        //     await onSubmit(values);
-        // }
+        //console.log('LOGIN FORM: ', values);
+        const { onSubmit } = props;
+        if (onSubmit) {
+            await onSubmit(values);
+        }
 
         //form.reset();
     }
@@ -47,6 +47,7 @@ function LoginForm(props) {
 
     return (
         <Box>
+            {isSubmitting && <LinearProgress className='loginForm__pg' />}
             <div className='loginForm'>
                 <img src={title} alt="" width='100%' />
                 <form onSubmit={form.handleSubmit(handleSubmit)}>

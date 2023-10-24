@@ -1,18 +1,19 @@
+import AddIcon from '@mui/icons-material/Add';
 import { Box, Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import GiftForm from './GiftForm';
-import { addToPackage } from './giftSlice'
-import AddIcon from '@mui/icons-material/Add';
 import './style.scss';
-//import PropTypes from 'prop-types';
+//import fileApi from '../../../../api/fileApi';
+//import axios from 'axios';
+import PropTypes from 'prop-types';
 
 AddGift.propTypes = {
-
+    onGiftSubmit: PropTypes.func,
 };
 
 function AddGift(props) {
     const [open, setOpen] = useState(false);
+    const { onGiftSubmit = null } = props;
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -22,19 +23,18 @@ function AddGift(props) {
         setOpen(false);
     };
 
-    const dispatch = useDispatch();
+    const handleAddGift = async (formValues) => {
+        if (onGiftSubmit) {
 
-    const handleAddGift = (formValues) => {
-        console.log('Gift submit', formValues);
-        const action = addToPackage(formValues);
-        dispatch(action);
-        window.location.reload();
+            await onGiftSubmit(formValues);
+            setOpen(false);
+        }
     }
 
     //localStorage.removeItem('gifts');
 
     return (
-        <div style={{ margin: '20px 0 50px 0' }}>
+        <div style={{ margin: '20px 0 50px 0' }} className="addBtnGift">
             <Button onClick={handleClickOpen}>
                 <Box className='addBtn'>
                     <AddIcon style={{ color: '#fff' }} />

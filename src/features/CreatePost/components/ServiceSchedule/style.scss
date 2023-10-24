@@ -1,0 +1,16 @@
+.scheduleDiv {
+  background: #fdf0f0 !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  &__detail {
+    padding: 10px !important;
+    p {
+      margin: 0 !important;
+    }
+  }
+  &__cancel {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+}

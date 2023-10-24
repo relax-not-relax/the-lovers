@@ -19,3 +19,28 @@
   height: 50px !important;
   background: #1f4172 !important;
 }
+
+.addBtnGift {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.form__pg {
+  margin-bottom: 20px !important;
+}
+
+.uploadFile {
+  border-radius: 5px !important;
+  display: inline-block;
+  padding: 10px 12px;
+  cursor: pointer;
+  margin-top: 15px !important;
+  background: #132043 !important;
+  color: #fff !important;
+  font-weight: 500 !important;
+}
+
+input[type="file"] {
+  display: none;
+}

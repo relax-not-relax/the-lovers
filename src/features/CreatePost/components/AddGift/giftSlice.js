@@ -24,11 +24,16 @@ const giftSlice = createSlice({
             const newPackage = updatedPackage.filter((x) => x.giftName !== giftNeedToRemove);
             state.giftItems = newPackage;
             saveGiftToLocalStorage(newPackage);
+        },
+
+        removeGiftPackage(state, action) {
+            state.giftItems = [];
+            saveGiftToLocalStorage([]);
         }
 
     }
 });
 
 const { actions, reducer } = giftSlice;
-export const { addToPackage, removeFromPackage } = actions;
+export const { addToPackage, removeFromPackage, removeGiftPackage } = actions;
 export default reducer;

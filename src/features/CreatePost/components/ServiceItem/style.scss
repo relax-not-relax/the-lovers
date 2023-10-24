@@ -1,0 +1,45 @@
+.serviceDiv {
+  width: 750px !important;
+  margin-top: 30px !important;
+  border: 1px solid #ccc;
+  border-radius: 10px !important;
+
+  &__img {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 10px !important;
+
+    img {
+      width: 300px !important;
+      height: 300px !important;
+    }
+  }
+
+  &__detail {
+    padding: 10px 30px 30px 30px !important;
+
+    .header {
+      font-size: 25px !important;
+      font-weight: 500 !important;
+    }
+
+    .description {
+      font-size: 15px !important;
+    }
+  }
+
+  &__schedule {
+    padding: 0 30px 30px 30px !important;
+  }
+
+  .createServiceBtn {
+    height: 50px !important;
+    background: #1f4172 !important;
+  }
+
+  .deleteServiceBtn {
+    height: 50px !important;
+    background: #ff6969 !important;
+  }
+}

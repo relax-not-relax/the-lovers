@@ -1,7 +1,9 @@
 import { Box, Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import React, { useState } from 'react';
-//import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import AddIcon from '@mui/icons-material/Add';
+import ProductForm from './ProductForm';
+import { addToProductList } from './productSlice';
 //import PropTypes from 'prop-types';
 
 AddProduct.propTypes = {
@@ -20,10 +22,17 @@ function AddProduct(props) {
         setOpen(false);
     };
 
-    //const dispatch = useDispatch();
+    const dispatch = useDispatch();
+
+    const handleAddProduct = (formValues) => {
+        console.log('Product submit', formValues);
+        const action = addToProductList(formValues);
+        dispatch(action);
+        window.location.reload();
+    }
 
     return (
-        <div style={{ margin: '20px 0 50px 0' }}>
+        <div style={{ margin: '20px 0 50px 0' }} className='addBtnProduct'>
             <Button onClick={handleClickOpen}>
                 <Box className='addBtn'>
                     <AddIcon style={{ color: '#fff' }} />
@@ -32,7 +41,7 @@ function AddProduct(props) {
             <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
                 <DialogContent>
 
-                    Product
+                    <ProductForm onSubmit={handleAddProduct} />
 
                 </DialogContent>
                 <DialogActions>

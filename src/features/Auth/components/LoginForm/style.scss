@@ -1,5 +1,5 @@
 .loginForm {
-  padding: 10px 30px 30px 30px !important;
+  padding: 0 30px 30px 30px !important;
   border: 1px solid #ccc;
 
   &__btn {
@@ -28,4 +28,8 @@
     color: #4787e2 !important;
     font-weight: 500;
   }
+}
+
+.loginForm__pg {
+  margin: 0 !important;
 }

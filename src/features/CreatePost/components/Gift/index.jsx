@@ -2,7 +2,6 @@ import { Box, Grid, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import giftImg from '../../../../images/gift.png';
 import { removeFromPackage } from '../AddGift/giftSlice';
 import CancelGift from './CancelGift';
 import './style.scss';
@@ -21,7 +20,7 @@ function Gift(props) {
             removeGift: gift.giftName,
         });
         dispatch(action);
-        window.location.reload();
+        //window.location.reload();
     }
 
     return (
@@ -29,13 +28,13 @@ function Gift(props) {
             <Grid container columns={{ md: 11, lg: 11 }}>
                 <Grid item md={3} lg={3}>
                     <Box className='giftDiv__img'>
-                        <img src={giftImg} alt="" width='80%' />
+                        <img src={gift.imageLink} alt="" width='80%' />
                     </Box>
                 </Grid>
                 <Grid item md={7} lg={7} className='giftTitle'>
                     <Box>
                         <Typography className='giftTitle__name'>{gift.giftName}</Typography>
-                        <Typography className='giftTitle__des'>{gift.giftDes}</Typography>
+                        <Typography className='giftTitle__des'>{gift.description}</Typography>
                     </Box>
                 </Grid>
                 <Grid item md={1} lg={1} className='cancelDiv'>

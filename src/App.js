@@ -8,20 +8,11 @@ import CreateFeature from './features/CreatePost';
 import HomeFeature from './features/Home';
 
 function App() {
-  const user = {
-    id: 1,
-    username: 'Test',
-    email: 'test@example.com',
-  };
 
-  localStorage.setItem('user', JSON.stringify(user));
-  //localStorage.removeItem('user');
-
-  const storedUser = localStorage.getItem('user');
+  const storedUser = localStorage.getItem('userTheLovers');
   const userObject = JSON.parse(storedUser);
 
-  // Kiểm tra xem userObject có tồn tại và userObject.username có tồn tại
-  if (userObject && userObject.username) {
+  if (userObject && userObject.email) {
     return (
       <div className="App">
         <Sidebar />

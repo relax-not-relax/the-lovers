@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, LinearProgress, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 //import PropTypes from 'prop-types';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,6 +9,14 @@ import './style.scss';
 import AddGift from './components/AddGift';
 import GiftList from './components/GiftList';
 import AddProduct from './components/AddProduct';
+import { useRouteMatch, useHistory, Switch, Route, useLocation } from 'react-router-dom/cjs/react-router-dom';
+import ProductList from './components/ProductList';
+import AddService from './components/AddService';
+import ServiceItem from './components/ServiceItem';
+import { useDispatch } from 'react-redux';
+import StorageKeys from '../../constants/storage-keys'
+import { addToPackage, removeGiftPackage } from './components/AddGift/giftSlice';
+import postAPI from '../../api/postApi'
 
 CreateFeature.propTypes = {
 
@@ -16,7 +24,32 @@ CreateFeature.propTypes = {
 
 function CreateFeature(props) {
 
-    const [valueType, setValueType] = useState('gift');
+    const { url } = useRouteMatch();
+    const history = useHistory();
+    const dispatch = useDispatch();
+
+    const location = useLocation();
+    const currentRoute = location.pathname;
+
+    useEffect(() => {
+        const defaultValue = getDefaultValueType(currentRoute);
+        setValueType(defaultValue);
+    }, [currentRoute]);
+
+
+    const getDefaultValueType = (route) => {
+        if (route.endsWith('/service')) {
+            return 'service';
+        } else if (route.endsWith('/product')) {
+            return 'product';
+        }
+
+        return 'gift';
+    };
+    const defaultValue = getDefaultValueType(currentRoute);
+
+    const [valueType, setValueType] = useState(defaultValue);
+
 
     const schema = yup.object().shape({
         title: yup.string()
@@ -30,31 +63,129 @@ function CreateFeature(props) {
         resolver: yupResolver(schema),
     });
 
-    const handleSubmit = (values) => {
-        console.log('POST FORM: ', values);
-    }
-
     const handleRadioChange = (event) => {
-        setValueType(event.target.value);
+        const newValueType = event.target.value;
+        setValueType(newValueType);
+
+        let newPath = url;
+
+        if (newValueType !== 'gift') {
+            newPath = `${url}/${newValueType}`;
+        }
+
+        history.push(newPath);
     };
 
-    const [gifts, setGifts] = useState([]);
+    const [content, setContent] = useState('');
+
+    const handleTextAreaChange = (e) => {
+        setContent(e.target.value);
+    }
+
+    const [giftList, setGiftList] = useState([]);
+    const [productList, setProductList] = useState([]);
+    const [serviceList, setServiceList] = useState([]);
+    const [loginUser, setLoginUser] = useState({});
 
     useEffect(() => {
-        // Trong hàm này, bạn sẽ lấy giỏ hàng từ localStorage và cập nhật state cart.
-        const getGiftsFromLocalStorage = () => {
+        const getGiftFromLocalStorage = () => {
             const gifts = localStorage.getItem('gifts');
             return gifts ? JSON.parse(gifts) : [];
         };
 
-        const giftsFromLocalStorage = getGiftsFromLocalStorage();
-        setGifts(giftsFromLocalStorage);
+        const giftsFromLocalStorage = getGiftFromLocalStorage();
+        setGiftList(giftsFromLocalStorage);
+    }, [giftList]);
+
+    useEffect(() => {
+        const getProductFromLocalStorage = () => {
+            const products = localStorage.getItem('products');
+            return products ? JSON.parse(products) : [];
+        };
+
+        const productsFromLocalStorage = getProductFromLocalStorage();
+        setProductList(productsFromLocalStorage);
+    }, [productList]);
+
+    useEffect(() => {
+        const getServiceFromLocalStorage = () => {
+            const services = localStorage.getItem('services');
+            return services ? JSON.parse(services) : [];
+        };
+
+        const servicesFromLocalStorage = getServiceFromLocalStorage();
+        setServiceList(servicesFromLocalStorage);
+    }, [serviceList]);
+
+    useEffect(() => {
+        const userData = localStorage.getItem(StorageKeys.USER);
+
+        if (userData) {
+            const parsedUserData = JSON.parse(userData);
+            setLoginUser(parsedUserData);
+        }
+
     }, []);
+
+    const [flag, setFlag] = useState(false);
+
+    useEffect(() => {
+        setFlag(false);
+    }, []);
+
+    const giftRequest = (values) => {
+        return {
+            "title": values.title,
+            "content": content,
+            "ownerId": loginUser.accountId,
+            "type": valueType,
+            "owner": null,
+            "gifts": giftList,
+            "products": [null],
+            "services": [null],
+        }
+    }
+
+    const handlePostSubmit = async (values) => {
+
+        if (flag === true) {
+
+            try {
+
+                if (valueType === 'gift' && currentRoute === '/create') {
+                    const request = giftRequest(values);
+
+                    await postAPI.add(request);
+                    const action = removeGiftPackage();
+                    await dispatch(action);
+                    window.location.href = '/posts';
+
+                    //console.log(request);
+                }
+
+            } catch (error) {
+                console.log('Failed to create a post', error);
+            }
+        }
+
+        setFlag(true);
+    }
+
+    const handleAddGift = (values) => {
+        setFlag(false);
+        console.log('Gift submit', values);
+        const action = addToPackage(values);
+        dispatch(action);
+        //window.location.reload();
+    }
+
+    const { isSubmitting } = form.formState;
 
     return (
         <Box className="createSection">
+
             <Typography className='createSection__hd'>Create new post</Typography>
-            <form onSubmit={form.handleSubmit(handleSubmit)}>
+            <form onSubmit={form.handleSubmit(handlePostSubmit)} id='postForm'>
                 <Box style={{
                     marginBottom: '20px'
                 }}>
@@ -78,7 +209,12 @@ function CreateFeature(props) {
                     }}>
                         Content
                     </Typography>
-                    <textarea cols="110" rows="10" className='contentArea'></textarea>
+                    <textarea
+                        cols="110"
+                        rows="10"
+                        className='contentArea'
+                        value={content ? content : ''}
+                        onChange={handleTextAreaChange}></textarea>
                 </Box>
 
                 <Box>
@@ -123,26 +259,60 @@ function CreateFeature(props) {
                         </label>
                     </div>
                     <div id="content" style={{ display: 'flex', justifyContent: 'center' }}>
-                        {valueType === 'gift' && (
-                            <>
-                                <Box>
-                                    <GiftList giftList={gifts} />
-                                    <AddGift />
-                                </Box>
-                            </>
-                        )}
-                        {valueType === 'service' && <p>Service Content</p>}
-                        {valueType === 'product' && (
-                            <>
-                                <Box>
-                                    <AddProduct />
-                                </Box>
-                            </>
-                        )}
+                        <Switch>
+                            {valueType === 'gift' && (
+                                <>
+                                    <Route exact path={url}>
+                                        <Box>
+                                            {(giftList.length > 0) && (
+                                                <>
+                                                    <GiftList giftList={giftList} />
+                                                </>
+                                            )}
+                                            <AddGift onGiftSubmit={handleAddGift} />
+                                        </Box>
+                                    </Route>
+                                </>
+                            )}
+                            {valueType === 'service' && (
+                                <>
+                                    <Route path={`${url}/service`}>
+                                        <Box>
+                                            {(serviceList.length > 0) && (
+                                                <>
+                                                    <ServiceItem service={serviceList[0]} index={0} />
+                                                </>
+                                            )}
+                                            {(serviceList.length <= 0) && (
+                                                <>
+                                                    <AddService />
+                                                </>
+                                            )}
+                                        </Box>
+                                    </Route>
+                                </>
+                            )}
+                            {valueType === 'product' && (
+                                <>
+                                    <Route path={`${url}/product`}>
+                                        <Box>
+                                            {(productList.length > 0) && (
+                                                <>
+                                                    <ProductList productList={productList} />
+                                                </>
+                                            )}
+                                            <AddProduct />
+                                        </Box>
+                                    </Route>
+                                </>
+                            )}
+                        </Switch>
+
                     </div>
                 </Box>
                 <Box style={{ padding: '0 200px', marginTop: '50px' }}>
-                    <Button type='submit' fullWidth variant='contained' className='createBtn'>
+                    {isSubmitting && <LinearProgress style={{ marginBottom: '5px' }} />}
+                    <Button disabled={isSubmitting} type='submit' fullWidth variant='contained' className='createBtn' >
                         CREATE
                     </Button>
                 </Box>

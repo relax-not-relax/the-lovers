@@ -1,5 +1,5 @@
 import React from 'react';
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import logo from '../../../../images/logo.png';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
@@ -7,11 +7,11 @@ import * as yup from 'yup';
 import InputField from '../../../../components/form-controls/InputField';
 import PasswordField from '../../../../components/form-controls/PasswordField';
 import './style.scss';
-import { Box, Button } from '@mui/material';
+import { Box, Button, LinearProgress } from '@mui/material';
 import { NavLink } from 'react-router-dom/cjs/react-router-dom';
 
 RegisterForm.propTypes = {
-    //onSubmit: PropTypes.func,
+    onSubmit: PropTypes.func,
 };
 
 function RegisterForm(props) {
@@ -27,8 +27,8 @@ function RegisterForm(props) {
             .email('Please enter a valid email address'),
         password: yup.string()
             .required('Please enter your password')
-            .min(6, 'Please enter at least 6 characters'),
-        confirmPassword: yup.string()
+            .min(3, 'Please enter at least 3 characters'),
+        passwordConfirm: yup.string()
             .required('Please confirm your password')
             .oneOf([yup.ref('password'), 'Password does not match']),
     });
@@ -38,17 +38,17 @@ function RegisterForm(props) {
             fullName: '',
             email: '',
             password: '',
-            confirmPassword: '',
+            passwordConfirm: '',
         },
         resolver: yupResolver(schema),
     })
 
     const handleSubmit = async (values) => {
-        console.log('LOGIN FORM: ', values);
-        // const { onSubmit } = props;
-        // if (onSubmit) {
-        //     await onSubmit(values);
-        // }
+        //console.log('LOGIN FORM: ', values);
+        const { onSubmit } = props;
+        if (onSubmit) {
+            await onSubmit(values);
+        }
 
         //form.reset();
     }
@@ -57,6 +57,7 @@ function RegisterForm(props) {
 
     return (
         <Box>
+            {isSubmitting && <LinearProgress className='loginForm__pg' />}
             <div className='registerForm'>
                 <Box>
                     <div className='registerForm__img'>
@@ -66,7 +67,7 @@ function RegisterForm(props) {
                         <InputField name='fullName' label='Full Name' form={form} errors={form.formState.errors} />
                         <InputField name='email' label='Email' form={form} errors={form.formState.errors} />
                         <PasswordField name='password' label='Password' form={form} errors={form.formState.errors} />
-                        <PasswordField name='confirmPassword' label='Confirm Password' form={form} errors={form.formState.errors} />
+                        <PasswordField name='passwordConfirm' label='Confirm Password' form={form} errors={form.formState.errors} />
                         <Button disabled={isSubmitting} type='submit' fullWidth variant='contained' className="registerForm__btn">
                             Sign Up
                         </Button>
