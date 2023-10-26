@@ -2,6 +2,7 @@ import { Redirect, Route, Switch } from 'react-router-dom/cjs/react-router-dom';
 import './App.css';
 import Profile from './components/Profile';
 import Sidebar from './components/Sidebar/index.jsx';
+import AccountMgnFeature from './features/AccountMgn';
 import LoginFeature from './features/Auth/components/Login';
 import RegisterFeature from './features/Auth/components/Register';
 import CreateFeature from './features/CreatePost';
@@ -20,6 +21,7 @@ function App() {
           <Redirect from='/' to='/feeds' exact />
           <Route path='/feeds' component={HomeFeature} exact />
           <Route path='/create' component={CreateFeature} />
+          <Route path='/account' component={AccountMgnFeature} />
         </Switch>
         <Profile />
       </div>

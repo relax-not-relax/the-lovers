@@ -30,7 +30,7 @@ const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
-                ignoredActions: ['user/login', 'users/register'],
+                ignoredActions: ['user/login', 'users/register', 'user/updateInformation'],
             },
         }).concat(localStorageMiddleware),
     preloadedState: {

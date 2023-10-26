@@ -41,6 +41,31 @@ const userSlice = createSlice({
             localStorage.removeItem(StorageKeys.TOKEN);
 
             state.current = {};
+        },
+
+        updateInformation(state, action) {
+            const currentUser = state.current;
+
+            const {
+                email,
+                fullName,
+                dateOfBirth,
+                phone,
+                address,
+                avatarLink,
+                description,
+            } = action.payload;
+
+            state.current = {
+                ...currentUser,
+                email: email || currentUser.email,
+                fullName: fullName || currentUser.fullName,
+                dateOfBirth: dateOfBirth || currentUser.dateOfBirth,
+                phone: phone || currentUser.phone,
+                address: address || currentUser.address,
+                avatarLink: avatarLink || currentUser.avatarLink,
+                description: description || currentUser.description,
+            };
         }
     },
     extraReducers: {
@@ -54,5 +79,5 @@ const userSlice = createSlice({
 });
 
 const { actions, reducer } = userSlice;
-export const { logout } = actions;
+export const { logout, updateInformation } = actions;
 export default reducer;

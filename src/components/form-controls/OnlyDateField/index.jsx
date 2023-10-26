@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Controller } from 'react-hook-form';
 import { TextField } from '@mui/material';
 
-FileField.propTypes = {
+OnlyDateField.propTypes = {
     form: PropTypes.object.isRequired,
     name: PropTypes.string.isRequired,
 
@@ -12,7 +12,7 @@ FileField.propTypes = {
     errors: PropTypes.object,
 };
 
-function FileField(props) {
+function OnlyDateField(props) {
     const { form, name, label, disabled, errors } = props;
     const hasError = errors[name];
 
@@ -20,7 +20,6 @@ function FileField(props) {
         <Controller
             name={name}
             control={form.control}
-            defaultValue=''
             render={({ field }) => (
                 <TextField
                     {...field}
@@ -31,12 +30,11 @@ function FileField(props) {
                     helperText={hasError?.message}
                     margin="normal"
                     variant="outlined"
-                    type="file"
-                    focused
+                    type="date"
                 />
             )}
         />
     );
 }
 
-export default FileField;
+export default OnlyDateField;

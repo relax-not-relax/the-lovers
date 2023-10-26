@@ -14,6 +14,11 @@ const userAPI = {
         return axiosClient.post(url, data);
     },
 
+    updateProfile(data) {
+        const url = '/Account/UpdateProfile';
+        return axiosClient.put(url, data);
+    }
+
 };
 
 export default userAPI;
