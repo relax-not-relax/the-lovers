@@ -1,0 +1,24 @@
+.typeDiv {
+  cursor: pointer !important;
+  &__menu {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+
+    .typeItem {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      height: 30px !important;
+      padding: 2px 20px !important;
+      background: #1f4172 !important;
+      border-radius: 20px !important;
+
+      .name {
+        text-transform: capitalize !important;
+        color: #fff;
+        font-weight: 500 !important;
+      }
+    }
+  }
+}

@@ -53,7 +53,13 @@ const serviceSlice = createSlice({
                     updatedServices[serviceIndex] = serviceToUpdate;
 
                     state.serviceItems = updatedServices;
-                    saveServiceToLocalStorage(updatedServices);
+
+                    if (updatedServiceScheduler.length === 0) {
+                        saveServiceToLocalStorage([]);
+                        state.serviceItems = [];
+                    } else {
+                        saveServiceToLocalStorage(updatedServices);
+                    }
                 }
             }
         }

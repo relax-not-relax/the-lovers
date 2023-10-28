@@ -1,3 +1,4 @@
+//import axiosClient from "../axiosClientv2";
 import axiosClientOdata from "./axiosClientOdata";
 
 const postApiOdata = {
@@ -11,6 +12,7 @@ const postApiOdata = {
     // }
 
     async getAll(params) {
+        //const user = JSON.parse(localStorage.getItem('userTheLovers'));
         const newParams = { ...params };
         newParams.$skip = !params._page || params._page <= 1
             ? 0
@@ -18,12 +20,12 @@ const postApiOdata = {
 
         delete newParams._page;
 
-        const postList = await axiosClientOdata.get('/Posts', {
+        const postList = await axiosClientOdata.get(`/Posts`, {
             params:
                 newParams
         });
 
-        const count = await axiosClientOdata.get('/Posts/$count', {
+        const count = await axiosClientOdata.get(`/Posts/$count`, {
             params:
                 newParams
         });

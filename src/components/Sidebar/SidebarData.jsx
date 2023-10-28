@@ -19,9 +19,9 @@ export const SidebarData = [
         link: "/posts",
     },
     {
-        title: "My Orders",
+        title: "My Cart",
         icon: <ShoppingBasketIcon fontSize='large' />,
-        link: "/orders",
+        link: "/cart",
     },
     {
         title: "Notifications",

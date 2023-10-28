@@ -1,15 +1,15 @@
-import { Box, Container, Grid, Pagination, Typography } from '@mui/material';
+import { Box, Grid, Pagination, Typography } from '@mui/material';
+import { Container } from '@mui/system';
 import queryString from 'query-string';
-import React, { useEffect, useState } from 'react';
-import { useMemo } from 'react';
-import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom';
-import FilterViewer from '../components/FilterViewer';
-import '../style.scss';
+import React, { useEffect, useMemo } from 'react';
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import postApiOdata from '../../../api/odata/postApiOdata';
-import PostSkeleton from '../components/PostSkeleton';
+import FilterViewer from '../../Home/components/FilterViewer';
+import DateFilter from '../../Home/components/FilterViewer/DateFilter';
+import PostSkeleton from '../../Home/components/PostSkeleton';
 import PostList from '../components/PostList';
-import DateFilter from '../components/FilterViewer/DateFilter';
-
 
 ListPage.propTypes = {
 
@@ -29,6 +29,7 @@ function ListPage(props) {
         return {
             ...params,
             //$filter: params.$filter || `type eq 'service'`,
+            $filter: params.$filter || `OwnerId eq ${user.accountId}`,
             accountId: user.accountId,
             $top: Number.parseInt(params.$top) || 5,
             $skip: Number.parseInt(params.$skip) || 0,
@@ -96,10 +97,11 @@ function ListPage(props) {
     const handleTypeChange = (newFilters) => {
 
         setLoading(true);
+        const user = JSON.parse(localStorage.getItem('userTheLovers'));
 
         const filters = {
             ...queryParams,
-            $filter: `Type eq '${newFilters}'`,
+            $filter: `(Type eq '${newFilters}') and (OwnerId eq ${user.accountId})`,
         }
 
         history.push({
@@ -124,18 +126,17 @@ function ListPage(props) {
         })
     }
 
-
     return (
         <Box className='homeSection'>
             <Box className='homeSection__hd'>
                 <Grid container>
                     <Grid item>
-                        <Typography className='header'>Feeds</Typography>
+                        <Typography className='header'>My Posts</Typography>
                     </Grid>
                     <Grid item style={{
                         display: 'flex',
                         alignItems: 'center',
-                        marginLeft: '450px'
+                        marginLeft: '430px'
                     }}>
                         <FilterViewer onChange={handleTypeChange} onReset={handleReset} />
                     </Grid>

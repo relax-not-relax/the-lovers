@@ -10,6 +10,8 @@ import PriceField from '../../../../components/form-controls/PriceField';
 import './style.scss';
 import { useState } from 'react';
 import axios from 'axios';
+import { useEffect } from 'react';
+import categoryApiOdata from '../../../../api/odata/categoryApiOdata';
 
 
 ProductForm.propTypes = {
@@ -42,6 +44,24 @@ function ProductForm(props) {
         resolver: yupResolver(schema),
     });
 
+    const [categories, setCategories] = useState([]);
+    useEffect(() => {
+        (async () => {
+            try {
+                const response = await categoryApiOdata.getAll();
+                const transformed = response.value.map((category) => (
+                    {
+                        value: category.CategoryId,
+                        label: category.CategoryName,
+                    }
+                ))
+                setCategories(transformed);
+            } catch (error) {
+                console.log(error.message);
+            }
+        })()
+    }, []);
+
     const [image, setImage] = useState({});
     const handleImage = (e) => {
         console.log(e.target.files);
@@ -50,11 +70,31 @@ function ProductForm(props) {
         });
     };
 
-    const categories = [
-        { value: 1, label: 'Category 1' },
-        { value: 2, label: 'Category 2' },
-        { value: 3, label: 'Category 3' },
-    ];
+    const handleImageLink = async () => {
+
+        if (image.file) {
+            const headers = {
+                accept: "*/*",
+                "Content-Type": "multipart/form-data",
+            };
+
+            const response = await axios.post("https://beprn231catdoglover20231017210252.azurewebsites.net/api/FireBase/UploadImageFile", image, { headers });
+
+            if (response.status === 200) {
+                console.log(response.data);
+                return response.data;
+            }
+        } else {
+            return '';
+        }
+
+    }
+
+    // const categories = [
+    //     { value: 1, label: 'Category 1' },
+    //     { value: 2, label: 'Category 2' },
+    //     { value: 3, label: 'Category 3' },
+    // ];
 
     const handleSubmit = async (values) => {
         if (!selectedCategory) {
@@ -62,25 +102,10 @@ function ProductForm(props) {
         } else {
 
             setError('');
-
-            const headers = {
-                accept: "*/*",
-                "Content-Type": "multipart/form-data",
-            };
-
             if (onSubmit) {
 
-                const imgLink = await axios
-                    .post("https://beprn231catdoglover20231017210252.azurewebsites.net/api/FireBase/UploadImageFile", image, { headers })
-                    .then((response) => {
-                        if (response.status === 200) {
-                            console.log(response.data);
-                            return response.data;
-                        }
-                    });
-
-
-                await onSubmit({ ...values, imgLink: imgLink });
+                const imgLink = await handleImageLink();
+                await onSubmit({ ...values, imageLink: imgLink });
 
             }
 
@@ -96,7 +121,7 @@ function ProductForm(props) {
     const { isSubmitting } = form.formState;
 
     return (
-        <div style={{ minHeight: '500px' }}>
+        <div style={{ minHeight: '550px' }}>
             {isSubmitting && <LinearProgress className='form__pg' />}
             <form onSubmit={form.handleSubmit(handleSubmit)}>
                 <Typography className='productFormTitle'>Add a product</Typography>

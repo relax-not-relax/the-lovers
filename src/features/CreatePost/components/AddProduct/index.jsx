@@ -1,18 +1,17 @@
-import { Box, Button, Dialog, DialogActions, DialogContent } from '@mui/material';
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import AddIcon from '@mui/icons-material/Add';
+import { Box, Button, Dialog, DialogActions, DialogContent } from '@mui/material';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import ProductForm from './ProductForm';
-import { addToProductList } from './productSlice';
-//import PropTypes from 'prop-types';
 
 AddProduct.propTypes = {
-
+    onProductSubmit: PropTypes.func,
 };
 
 function AddProduct(props) {
 
     const [open, setOpen] = useState(false);
+    const { onProductSubmit = null } = props;
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -22,13 +21,13 @@ function AddProduct(props) {
         setOpen(false);
     };
 
-    const dispatch = useDispatch();
 
-    const handleAddProduct = (formValues) => {
-        console.log('Product submit', formValues);
-        const action = addToProductList(formValues);
-        dispatch(action);
-        window.location.reload();
+    const handleAddProduct = async (formValues) => {
+
+        if (onProductSubmit) {
+            await onProductSubmit(formValues);
+            setOpen(false);
+        }
     }
 
     return (

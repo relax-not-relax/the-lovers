@@ -1,0 +1,21 @@
+.cartSection {
+  width: 1000px !important;
+  min-height: 100vh !important;
+  padding: 50px 35px !important;
+
+  &__header {
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    margin-bottom: 50px !important;
+  }
+
+  .header {
+    font-size: 25px !important;
+    font-weight: 700 !important;
+    margin-right: 7px !important;
+  }
+
+  &__view {
+  }
+}

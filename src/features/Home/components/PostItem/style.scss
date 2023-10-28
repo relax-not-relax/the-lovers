@@ -33,6 +33,19 @@
     }
   }
 
+  .reaction {
+    display: flex !important;
+    align-items: center !important;
+
+    .active {
+      color: #d80032 !important;
+    }
+
+    .notActive {
+      color: #ccc !important;
+    }
+  }
+
   .content {
     .header {
       font-size: 20px !important;
@@ -50,5 +63,129 @@
     display: flex !important;
     justify-content: flex-start !important;
     align-items: center !important;
+  }
+}
+
+.productPostDiv {
+  padding: 30px 20px !important;
+  margin: 40px 0 !important;
+  background: #fdf6f6 !important;
+  border-radius: 15px !important;
+
+  .imgDiv {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .title {
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+
+    .userName {
+      font-size: 15px !important;
+      font-weight: 500 !important;
+    }
+
+    .createAt {
+      font-size: 14px !important;
+      color: #838383 !important;
+    }
+  }
+
+  .reaction {
+    display: flex !important;
+    align-items: center !important;
+
+    .active {
+      color: #d80032 !important;
+    }
+
+    .notActive {
+      color: #ccc !important;
+    }
+  }
+
+  .content {
+    .header {
+      font-size: 20px !important;
+      font-weight: 500 !important;
+      color: #132043 !important;
+    }
+
+    .detail {
+      font-size: 15px !important;
+      font-weight: 300 !important;
+    }
+  }
+}
+
+.servicePostDiv {
+  padding: 30px 20px !important;
+  margin: 40px 0 !important;
+  background: #fdf6f6 !important;
+  border-radius: 15px !important;
+
+  .imgDiv {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .title {
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+
+    .userName {
+      font-size: 15px !important;
+      font-weight: 500 !important;
+    }
+
+    .createAt {
+      font-size: 14px !important;
+      color: #838383 !important;
+    }
+  }
+
+  .reaction {
+    display: flex !important;
+    align-items: center !important;
+
+    .active {
+      color: #d80032 !important;
+    }
+
+    .notActive {
+      color: #ccc !important;
+    }
+  }
+
+  .content {
+    .header {
+      font-size: 20px !important;
+      font-weight: 500 !important;
+      color: #132043 !important;
+    }
+
+    .detail {
+      font-size: 15px !important;
+      font-weight: 300 !important;
+    }
   }
 }

@@ -17,6 +17,8 @@ import { useDispatch } from 'react-redux';
 import StorageKeys from '../../constants/storage-keys'
 import { addToPackage, removeGiftPackage } from './components/AddGift/giftSlice';
 import postAPI from '../../api/postApi'
+import { addToProductList, removeProductList } from './components/AddProduct/productSlice';
+import { addScheduleToService, addToServiceList, removeFromServiceList } from './components/AddService/serviceSlice';
 
 CreateFeature.propTypes = {
 
@@ -146,6 +148,66 @@ function CreateFeature(props) {
         }
     }
 
+    const productRequest = (values) => {
+        return {
+            "title": values.title,
+            "content": content,
+            "ownerId": loginUser.accountId,
+            "type": valueType,
+            "owner": null,
+            "gifts": null,
+            "products": productList.map((product) => (
+                {
+                    itemId: "",
+                    productId: "",
+                    postId: 0,
+                    productName: product.productName,
+                    description: product.productDes,
+                    price: product.price,
+                    imageLink: product.imageLink,
+                    categoryId: product.category.value,
+                    status: true,
+                    category: null,
+                }
+            )),
+            "services": null,
+            "reacts": null
+        }
+    }
+
+    const serviceRequest = (values) => {
+        return {
+            "title": values.title,
+            "content": content,
+            "ownerId": loginUser.accountId,
+            "type": valueType,
+            "gifts": null,
+            "products": null,
+            "services": [
+                {
+                    serviceId: "",
+                    serviceName: serviceList[0].serviceName,
+                    postId: 0,
+                    description: serviceList[0].serviceDes,
+                    status: true,
+                    imageLink: serviceList[0].imageLink,
+                    address: serviceList[0].address,
+                    serviceSchedulers: serviceList[0].serviceScheduler.map((schedule) => (
+                        {
+                            itemId: '',
+                            serviceId: '',
+                            price: schedule.price,
+                            startDate: schedule.startDate,
+                            endDate: schedule.endDate,
+                            status: true
+                        }
+                    ))
+                }
+            ],
+            "reacts": null
+        }
+    }
+
     const handlePostSubmit = async (values) => {
 
         if (flag === true) {
@@ -163,6 +225,24 @@ function CreateFeature(props) {
                     //console.log(request);
                 }
 
+                if (valueType === 'product' && currentRoute === '/create/product') {
+                    const request = productRequest(values);
+                    //console.log(request);
+                    await postAPI.add(request);
+                    const action = removeProductList();
+                    await dispatch(action);
+                    window.location.href = '/posts';
+                }
+
+                if (valueType === 'service' && currentRoute === '/create/service') {
+                    const request = serviceRequest(values);
+                    //console.log(request);
+                    await postAPI.add(request);
+                    const action = removeFromServiceList();
+                    await dispatch(action);
+                    window.location.href = '/posts';
+                }
+
             } catch (error) {
                 console.log('Failed to create a post', error);
             }
@@ -173,10 +253,48 @@ function CreateFeature(props) {
 
     const handleAddGift = (values) => {
         setFlag(false);
-        console.log('Gift submit', values);
+        //console.log('Gift submit', values);
         const action = addToPackage(values);
         dispatch(action);
         //window.location.reload();
+    }
+
+    const handleAddProduct = (values) => {
+        setFlag(false);
+        //console.log('Product submit', values);
+        const action = addToProductList(values);
+        dispatch(action);
+    }
+
+    const handleAddService = (values) => {
+        setFlag(false);
+        const serviceItem = {
+            serviceName: values.serviceName,
+            serviceDes: values.serviceDes,
+            imageLink: values.imageLink,
+            address: values.address,
+            serviceScheduler: [{
+                startDate: values.startDate,
+                endDate: values.endDate,
+                price: values.price
+            }]
+        };
+        console.log("Service submit: ", serviceItem);
+        const action = addToServiceList(serviceItem);
+        dispatch(action);
+    }
+
+    const handleAddSchedule = (values) => {
+        setFlag(false);
+        console.log("Schedule submit: ", values);
+        const scheduleItem = {
+            index: 0,
+            startDate: values.startDate,
+            endDate: values.endDate,
+            price: values.price
+        };
+        const action = addScheduleToService(scheduleItem);
+        dispatch(action);
     }
 
     const { isSubmitting } = form.formState;
@@ -280,12 +398,12 @@ function CreateFeature(props) {
                                         <Box>
                                             {(serviceList.length > 0) && (
                                                 <>
-                                                    <ServiceItem service={serviceList[0]} index={0} />
+                                                    <ServiceItem service={serviceList[0]} onScheduleSubmit={handleAddSchedule} />
                                                 </>
                                             )}
                                             {(serviceList.length <= 0) && (
                                                 <>
-                                                    <AddService />
+                                                    <AddService onServiceSubmit={handleAddService} />
                                                 </>
                                             )}
                                         </Box>
@@ -301,7 +419,7 @@ function CreateFeature(props) {
                                                     <ProductList productList={productList} />
                                                 </>
                                             )}
-                                            <AddProduct />
+                                            <AddProduct onProductSubmit={handleAddProduct} />
                                         </Box>
                                     </Route>
                                 </>

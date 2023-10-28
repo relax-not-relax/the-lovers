@@ -1,8 +1,8 @@
-import axiosClient from "./axiosClient";
+import axiosClient from "./axiosClientv2";
 
 const postAPI = {
     add(data) {
-        const url = '/Posts';
+        const url = '/Posts/Post';
         return axiosClient.post(url, data);
     }
 };

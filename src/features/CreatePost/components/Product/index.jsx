@@ -23,13 +23,13 @@ function Product(props) {
         });
 
         dispatch(action);
-        window.location.reload();
+        //window.location.reload();
     }
 
     return (
         <Box className='productDiv'>
             <Box className='productDiv__img'>
-                <img src={product.imgLink} alt="" />
+                <img src={product.imageLink} alt="" />
             </Box>
             <Box className='productDiv__txt'>
                 <Typography className='name'>{product.productName}</Typography>

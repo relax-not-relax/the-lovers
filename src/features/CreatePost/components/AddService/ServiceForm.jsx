@@ -35,7 +35,8 @@ function ServiceForm(props) {
         endDate: yup
             .date()
             .required('Please enter service end date')
-            .min(yup.ref('startDate'), 'End date must be after the start date')
+            .min(yup.ref('startDate'), 'End date must be after the start date'),
+        address: yup.string(),
     });
 
     const form = useForm({
@@ -45,6 +46,7 @@ function ServiceForm(props) {
             price: 0,
             startDate: '',
             endDate: '',
+            address: '',
         },
         resolver: yupResolver(schema),
     });
@@ -57,26 +59,32 @@ function ServiceForm(props) {
         });
     };
 
-    const handleSubmit = async (values) => {
+    const handleImageLink = async () => {
 
-        const headers = {
-            accept: "*/*",
-            "Content-Type": "multipart/form-data",
-        };
+        if (image.file) {
+            const headers = {
+                accept: "*/*",
+                "Content-Type": "multipart/form-data",
+            };
+
+            const response = await axios.post("https://beprn231catdoglover20231017210252.azurewebsites.net/api/FireBase/UploadImageFile", image, { headers });
+
+            if (response.status === 200) {
+                console.log(response.data);
+                return response.data;
+            }
+        } else {
+            return '';
+        }
+
+    }
+
+    const handleSubmit = async (values) => {
 
         if (onSubmit) {
 
-            const imgLink = await axios
-                .post("https://beprn231catdoglover20231017210252.azurewebsites.net/api/FireBase/UploadImageFile", image, { headers })
-                .then((response) => {
-                    if (response.status === 200) {
-                        console.log(response.data);
-                        return response.data;
-                    }
-                });
-
-
-            await onSubmit({ ...values, imgLink: imgLink });
+            const imgLink = await handleImageLink();
+            await onSubmit({ ...values, imageLink: imgLink });
 
         }
 
@@ -92,6 +100,7 @@ function ServiceForm(props) {
                 <Typography className='serviceFormTitle'>Add a service</Typography>
                 <InputField name='serviceName' label='Service Name' form={form} errors={form.formState.errors} />
                 <InputField name='serviceDes' label='Service Description' form={form} errors={form.formState.errors} />
+                <InputField name='address' label='Address' form={form} errors={form.formState.errors} />
 
                 <label className='uploadFile'>
                     <input type="file" name='file' onChange={handleImage} />

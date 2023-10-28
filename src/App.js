@@ -5,8 +5,10 @@ import Sidebar from './components/Sidebar/index.jsx';
 import AccountMgnFeature from './features/AccountMgn';
 import LoginFeature from './features/Auth/components/Login';
 import RegisterFeature from './features/Auth/components/Register';
+import CartFeature from './features/Cart';
 import CreateFeature from './features/CreatePost';
 import HomeFeature from './features/Home';
+import MyPostsFeature from './features/MyPosts';
 
 function App() {
 
@@ -22,6 +24,8 @@ function App() {
           <Route path='/feeds' component={HomeFeature} exact />
           <Route path='/create' component={CreateFeature} />
           <Route path='/account' component={AccountMgnFeature} />
+          <Route path='/cart' component={CartFeature} />
+          <Route path='/posts' component={MyPostsFeature} />
         </Switch>
         <Profile />
       </div>

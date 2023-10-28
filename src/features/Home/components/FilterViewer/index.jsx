@@ -1,68 +1,36 @@
-import { Box, Chip } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 import React from 'react';
-//import PropTypes from 'prop-types';
 import './style.scss';
 
-const FILTER_LIST = [
-    {
-        id: 1,
-        getLabel: () => 'Gift',
-        isActive: () => { },
-        isVisible: () => true,
-        isRemovable: false,
-        onRemove: () => { },
-        onToggle: () => { },
-    },
-
-    {
-        id: 2,
-        getLabel: () => 'Product',
-        isActive: () => { },
-        isVisible: () => true,
-        isRemovable: false,
-        onRemove: () => { },
-        onToggle: () => { },
-    },
-
-    {
-        id: 3,
-        getLabel: () => 'Service',
-        isActive: () => { },
-        isVisible: () => true,
-        isRemovable: false,
-        onRemove: () => { },
-        onToggle: () => { },
-    },
-];
-
 FilterViewer.propTypes = {
-
+    onChange: PropTypes.func,
+    onReset: PropTypes.func,
 };
 
 function FilterViewer(props) {
 
-    const visibleFilters = () => {
-        return FILTER_LIST;
+    const { onChange, onReset } = props;
+    const postType = ['gift', 'product', 'service'];
+
+    const handleTypeChange = (type) => {
+        onChange(type);
     }
 
-    const handleClick = () => {
-        console.info('You clicked the Chip.');
+    const handleAllClick = () => {
+        onReset();
     };
 
-
     return (
-        <Box component="ul" className='filterList'>
-            {visibleFilters.map(x => (
-                <li key={x.id}>
-                    <Chip
-                        label={x.getLabel()}
-                        color={x.isActive() ? 'primary' : 'default'}
-                        clickable={!x.isRemovable}
-                        onClick={handleClick}
-                        onDelete={handleClick}
-                    />
-                </li>
-            ))}
+        <Box className='typeDiv'>
+            <div className='typeDiv__menu'>
+                {postType.map((type, idx) => (
+                    <div key={idx} onClick={() => handleTypeChange(type)} className='typeItem'>
+                        <Typography className='name'>{type}</Typography>
+                    </div>
+                ))}
+                <div onClick={handleAllClick} className='typeItem'><Typography className='name'>All</Typography></div>
+            </div>
         </Box>
     );
 }

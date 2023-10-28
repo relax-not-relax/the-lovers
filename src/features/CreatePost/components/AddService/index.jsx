@@ -1,19 +1,18 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Button, Dialog, DialogActions, DialogContent } from '@mui/material';
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-//import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import ServiceForm from './ServiceForm';
-import { addToServiceList } from './serviceSlice';
 import './style.scss';
 
 AddService.propTypes = {
-
+    onServiceSubmit: PropTypes.func,
 };
 
 function AddService(props) {
 
     const [open, setOpen] = useState(false);
+    const { onServiceSubmit = null } = props;
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -23,23 +22,14 @@ function AddService(props) {
         setOpen(false);
     };
 
-    const dispatch = useDispatch();
 
-    const handleAddService = (formValues) => {
-        const serviceItem = {
-            serviceName: formValues.serviceName,
-            serviceDes: formValues.serviceDes,
-            imgLink: formValues.imgLink,
-            serviceScheduler: [{
-                startDate: formValues.startDate,
-                endDate: formValues.endDate,
-                price: formValues.price
-            }]
-        };
-        console.log("Service submit: ", serviceItem);
-        const action = addToServiceList(serviceItem);
-        dispatch(action);
-        window.location.reload();
+    const handleAddService = async (formValues) => {
+
+        if (onServiceSubmit) {
+            await onServiceSubmit(formValues);
+            setOpen(false);
+        }
+
     }
 
     return (

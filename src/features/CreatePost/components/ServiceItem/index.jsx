@@ -1,23 +1,21 @@
-import React from 'react';
+import { Box, Button, Dialog, DialogActions, DialogContent, Grid, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-import './style.scss';
-import { Box, Grid, Typography, Button, Dialog, DialogContent, DialogActions } from '@mui/material';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import ServiceSchedule from '../ServiceSchedule';
-import ScheduleForm from './ScheduleForm';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addScheduleToService, removeFromServiceList } from '../AddService/serviceSlice';
+import { removeFromServiceList } from '../AddService/serviceSlice';
+import ServiceSchedule from '../ServiceSchedule';
 import CancelService from './CancelService';
+import ScheduleForm from './ScheduleForm';
+import './style.scss';
 
 ServiceItem.propTypes = {
     service: PropTypes.object,
-    index: PropTypes.number,
+    onScheduleSubmit: PropTypes.func,
 };
 
 function ServiceItem(props) {
 
-    const { service, index } = props;
+    const { service, onScheduleSubmit = null } = props;
     const [serviceScheduler, setServiceScheduler] = useState([]);
     const [open, setOpen] = useState(false);
 
@@ -38,17 +36,11 @@ function ServiceItem(props) {
 
     const dispatch = useDispatch();
 
-    const handleAddSchedule = (formValues) => {
-        console.log("Schedule submit: ", formValues);
-        const scheduleItem = {
-            index: index,
-            startDate: formValues.startDate,
-            endDate: formValues.endDate,
-            price: formValues.price
-        };
-        const action = addScheduleToService(scheduleItem);
-        dispatch(action);
-        window.location.reload();
+    const handleAddSchedule = async (formValues) => {
+        if (onScheduleSubmit) {
+            await onScheduleSubmit(formValues);
+            setOpen(false);
+        }
     }
 
     const handleCancelService = () => {
@@ -60,7 +52,7 @@ function ServiceItem(props) {
     return (
         <Box className="serviceDiv">
             <Box className="serviceDiv__img">
-                <img src={service.imgLink} alt="" width='100%' />
+                <img src={service.imageLink} alt="" width='100%' />
             </Box>
             <Box className="serviceDiv__detail">
                 <Typography className='header'>

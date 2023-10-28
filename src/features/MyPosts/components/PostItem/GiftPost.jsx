@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Grid, Typography } from '@mui/material';
-import './style.scss';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import GiftItem from '../Gifttem';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import reactApiOdata from '../../../../api/odata/reactApiOdata';
+import { Box, Grid, Typography } from '@mui/material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import GiftItem from '../GiftItem';
 
 dayjs.extend(relativeTime)
 
@@ -120,7 +119,7 @@ function GiftPost(props) {
                 <Box marginTop={5}>
                     {giftList.map((gift) => (
                         <Box key={gift.GiftId}>
-                            <GiftItem item={gift} cmOwnerId={userId} />
+                            <GiftItem item={gift} />
                         </Box>
                     ))}
                 </Box>

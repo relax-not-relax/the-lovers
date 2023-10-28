@@ -86,7 +86,7 @@ function GiftForm(props) {
                 </label>
 
                 <Box style={{ padding: '0 100px' }}>
-                    <Button type='submit' fullWidth variant='contained' className='giftFormBtn' >
+                    <Button disabled={isSubmitting} type='submit' fullWidth variant='contained' className='giftFormBtn' >
                         ADD
                     </Button>
 
