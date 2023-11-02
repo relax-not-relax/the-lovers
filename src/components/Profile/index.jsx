@@ -35,7 +35,7 @@ function Profile(props) {
             <Box>
                 <Grid container spacing={1}>
                     <Grid item md={3} lg={3}>
-                        <img src={loginUser.avatarLink} alt="" width='80%' />
+                        <img src={loginUser.avatarLink ? loginUser.avatarLink : 'https://firebasestorage.googleapis.com/v0/b/voicespire-7162e.appspot.com/o/imgs%2F20231025013807461.png?alt=media&token=209b22c7-c184-48e9-8ce0-c657c5f66182'} alt="" width='80%' />
                     </Grid>
                     <Grid item md={9} lg={9}>
                         <Box>

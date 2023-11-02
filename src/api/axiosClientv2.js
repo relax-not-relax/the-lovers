@@ -1,9 +1,12 @@
 import axios from "axios";
 
+const access_token = localStorage.getItem('access_token');
+
 const axiosClient = axios.create({
-    baseURL: 'https://beprn231cardogloverodata20231024085350.azurewebsites.net/',
+    baseURL: 'https://beprn231cardogloverodata20231030114819.azurewebsites.net/',
     headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${access_token}`
     }
 });
 

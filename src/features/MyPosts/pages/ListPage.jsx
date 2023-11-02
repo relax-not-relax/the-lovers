@@ -53,7 +53,7 @@ function ListPage(props) {
                 const { data, pagination } = await postApiOdata.getAll(queryParams);
                 console.log({ data, pagination });
                 setPagination(pagination);
-                setPostList(data.value);
+                setPostList(data);
             } catch (error) {
                 console.log('Failed to load post', error);
                 setPostList([]);

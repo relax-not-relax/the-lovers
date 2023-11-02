@@ -1,0 +1,30 @@
+.giftDetailDiv {
+  border: 1px solid #ccc !important;
+  margin-bottom: 20px !important;
+  border-radius: 10px !important;
+  padding: 15px 10px !important;
+  .commentDetail {
+    margin-top: 20px !important;
+
+    .imgDiv {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #fff !important;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .comment {
+      background: #f5f5f5 !important;
+      padding: 10px 20px !important;
+      width: 400px !important;
+      border-radius: 10px !important;
+    }
+  }
+}

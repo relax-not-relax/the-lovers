@@ -9,6 +9,7 @@ import CartFeature from './features/Cart';
 import CreateFeature from './features/CreatePost';
 import HomeFeature from './features/Home';
 import MyPostsFeature from './features/MyPosts';
+import UserViewFeature from './features/UserView';
 
 function App() {
 
@@ -21,11 +22,12 @@ function App() {
         <Sidebar />
         <Switch>
           <Redirect from='/' to='/feeds' exact />
-          <Route path='/feeds' component={HomeFeature} exact />
+          <Route path='/feeds' component={HomeFeature} />
           <Route path='/create' component={CreateFeature} />
           <Route path='/account' component={AccountMgnFeature} />
           <Route path='/cart' component={CartFeature} />
           <Route path='/posts' component={MyPostsFeature} />
+          <Route path='/profile' component={UserViewFeature} />
         </Switch>
         <Profile />
       </div>

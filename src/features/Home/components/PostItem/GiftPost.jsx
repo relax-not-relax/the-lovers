@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import GiftItem from '../Gifttem';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import reactApiOdata from '../../../../api/odata/reactApiOdata';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 dayjs.extend(relativeTime)
 
@@ -20,6 +21,7 @@ GiftPost.propTypes = {
 function GiftPost(props) {
 
     const { giftPost, userId } = props;
+    const history = useHistory();
 
     const [giftList, setGiftList] = useState([]);
     const [changeColor, setChangeColor] = useState(false);
@@ -71,12 +73,22 @@ function GiftPost(props) {
         }
     }
 
+    const handlePostClick = () => {
+        history.push(`/feeds/post/${giftPost.PostId}`)
+    }
+
+    const handleProfileClick = () => {
+        history.push(`/profile/${giftPost.Owner.AccountId}`)
+    }
+
     return (
         <Box className='giftPostCtn'>
             <Box className='giftPostDiv'>
                 <Grid container spacing={2}>
                     <Grid item md={1} lg={1}>
-                        <Box className='imgDiv'>
+                        <Box className='imgDiv' onClick={handleProfileClick} style={{
+                            cursor: 'pointer'
+                        }}>
                             <img
                                 src={giftPost.Owner.AvatarLink ? giftPost.Owner.AvatarLink : 'https://firebasestorage.googleapis.com/v0/b/voicespire-7162e.appspot.com/o/imgs%2F20231025013807461.png?alt=media&token=209b22c7-c184-48e9-8ce0-c657c5f66182'}
                                 alt=""
@@ -120,7 +132,7 @@ function GiftPost(props) {
                 <Box marginTop={5}>
                     {giftList.map((gift) => (
                         <Box key={gift.GiftId}>
-                            <GiftItem item={gift} cmOwnerId={userId} />
+                            <GiftItem item={gift} cmOwnerId={userId} onClick={handlePostClick} />
                         </Box>
                     ))}
                 </Box>

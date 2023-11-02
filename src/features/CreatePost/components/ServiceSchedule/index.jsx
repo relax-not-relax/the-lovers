@@ -28,7 +28,7 @@ function ServiceSchedule(props) {
             scheduleIndex: scheduleIndex,
         });
         dispatch(action);
-        window.location.reload();
+        //window.location.reload();
     }
 
     return (

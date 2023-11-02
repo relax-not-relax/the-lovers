@@ -8,6 +8,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import ProductItem from '../ProductItem';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import reactApiOdata from '../../../../api/odata/reactApiOdata';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 dayjs.extend(relativeTime);
 
@@ -19,6 +20,7 @@ ProductPost.propTypes = {
 function ProductPost(props) {
 
     const { productPost, userId } = props;
+    const history = useHistory();
 
     const [productList, setProductList] = useState([]);
     const [changeColor, setChangeColor] = useState(false);
@@ -70,13 +72,23 @@ function ProductPost(props) {
         }
     }
 
+    const handlePostClick = () => {
+        history.push(`/feeds/post/${productPost.PostId}`)
+    }
+
+    const handleProfileClick = () => {
+        history.push(`/profile/${productPost.Owner.AccountId}`)
+    }
+
     return (
         <div>
             <Box className='productPostCtn'>
                 <Box className='productPostDiv'>
                     <Grid container spacing={2}>
                         <Grid item md={1} lg={1}>
-                            <Box className='imgDiv'>
+                            <Box className='imgDiv' onClick={handleProfileClick} style={{
+                                cursor: 'pointer'
+                            }}>
                                 <img
                                     src={productPost.Owner.AvatarLink ? productPost.Owner.AvatarLink : 'https://firebasestorage.googleapis.com/v0/b/voicespire-7162e.appspot.com/o/imgs%2F20231025013807461.png?alt=media&token=209b22c7-c184-48e9-8ce0-c657c5f66182'}
                                     alt=""
@@ -117,15 +129,36 @@ function ProductPost(props) {
                         </Typography>
                     </Box>
 
-                    <Box marginTop={5}>
-                        <Grid container spacing={1}>
-                            {productList.map((product) => (
-                                <Grid item key={product.ProductId} md={4} lg={4}>
-                                    <ProductItem item={product} />
+                    {productPost.OwnerId === userId && (
+                        <>
+                            <Box marginTop={5}>
+                                <Grid container spacing={1}>
+                                    {productList.map((product) => (
+                                        <Grid item key={product.ProductId} md={4} lg={4}>
+                                            <ProductItem item={product} />
+                                        </Grid>
+                                    ))}
                                 </Grid>
-                            ))}
-                        </Grid>
-                    </Box>
+                            </Box>
+                        </>
+                    )}
+
+                    {productPost.OwnerId !== userId && (
+                        <>
+                            <Box marginTop={5} onClick={handlePostClick} style={{
+                                cursor: 'pointer'
+                            }}>
+                                <Grid container spacing={1}>
+                                    {productList.map((product) => (
+                                        <Grid item key={product.ProductId} md={4} lg={4}>
+                                            <ProductItem item={product} />
+                                        </Grid>
+                                    ))}
+                                </Grid>
+                            </Box>
+                        </>
+                    )}
+
                 </Box>
             </Box>
         </div>

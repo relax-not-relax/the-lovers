@@ -19,4 +19,20 @@
 
 .postDetailSection {
   width: 900px !important;
+
+  .serviceItemDiv {
+    margin-top: 50px !important;
+    border: 1px solid #ccc;
+    padding: 30px 20px !important;
+
+    .scheduleDivItem__detail {
+      background: #fffaee !important;
+    }
+
+    .addToCartDiv {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 }

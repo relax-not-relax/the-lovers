@@ -8,6 +8,7 @@ import reactApiOdata from '../../../../api/odata/reactApiOdata';
 import { Box, Grid, Typography } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import GiftItem from '../GiftItem';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 dayjs.extend(relativeTime)
 
@@ -19,6 +20,7 @@ GiftPost.propTypes = {
 function GiftPost(props) {
 
     const { giftPost, userId } = props;
+    const history = useHistory();
 
     const [giftList, setGiftList] = useState([]);
     const [changeColor, setChangeColor] = useState(false);
@@ -70,6 +72,10 @@ function GiftPost(props) {
         }
     }
 
+    const handlePostClick = () => {
+        history.push(`/posts/post/${giftPost.PostId}`)
+    }
+
     return (
         <Box className='giftPostCtn'>
             <Box className='giftPostDiv'>
@@ -116,7 +122,7 @@ function GiftPost(props) {
                     </Typography>
                 </Box>
 
-                <Box marginTop={5}>
+                <Box marginTop={5} onClick={handlePostClick}>
                     {giftList.map((gift) => (
                         <Box key={gift.GiftId}>
                             <GiftItem item={gift} />

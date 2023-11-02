@@ -9,6 +9,8 @@ import postApiOdata from '../../../api/odata/postApiOdata';
 import PostSkeleton from '../components/PostSkeleton';
 import PostList from '../components/PostList';
 import DateFilter from '../components/FilterViewer/DateFilter';
+import StorageKeys from '../../../constants/storage-keys';
+import axios from 'axios';
 
 
 ListPage.propTypes = {
@@ -28,7 +30,7 @@ function ListPage(props) {
 
         return {
             ...params,
-            //$filter: params.$filter || `type eq 'service'`,
+            // $filter: params.$filter || `type eq 'gift'`,
             accountId: user.accountId,
             $top: Number.parseInt(params.$top) || 5,
             $skip: Number.parseInt(params.$skip) || 0,
@@ -49,13 +51,25 @@ function ListPage(props) {
     useEffect(() => {
         (async () => {
             try {
-                const { data, pagination } = await postApiOdata.getAll(queryParams);
-                console.log({ data, pagination });
-                setPagination(pagination);
-                setPostList(data.value);
+                const response = await postApiOdata.getAll(queryParams);
+                //console.log(response);
+                setPagination(response.pagination);
+                setPostList(response.data);
+
+                //console.log(response.status);
             } catch (error) {
-                console.log('Failed to load post', error);
-                setPostList([]);
+                //console.log(error.code);
+                if (error.code === 'ERR_NETWORK') {
+                    const refreshToken = localStorage.getItem(StorageKeys.REFRESH);
+                    const response = await axios.get(`https://beprn231catdoglover20231017210252.azurewebsites.net/api/Auth/RefreshToken/${refreshToken}`);
+                    if (response.status === 200) {
+                        localStorage.setItem(StorageKeys.TOKEN, response.data.accessToken);
+                        window.location.reload();
+                    }
+
+                }
+
+                //setPostList([]);
             }
 
             setLoading(false);

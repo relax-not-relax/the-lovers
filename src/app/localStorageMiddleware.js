@@ -1,3 +1,4 @@
+import { addToCart, removeFromCart } from "../features/Cart/cartSlice";
 import { addToPackage, removeFromPackage, removeGiftPackage } from "../features/CreatePost/components/AddGift/giftSlice";
 import { addToProductList, removeFromProductList, removeProductList } from "../features/CreatePost/components/AddProduct/productSlice";
 import { addScheduleToService, addToServiceList, removeFromServiceList, removeServiceSchedule } from "../features/CreatePost/components/AddService/serviceSlice";
@@ -9,10 +10,12 @@ export const localStorageMiddleware = (store) => (next) => (action) => {
     const giftActions = [addToPackage.type, removeFromPackage.type, removeGiftPackage.type];
     const productActions = [addToProductList.type, removeFromProductList.type, removeProductList.type];
     const serviceActions = [addToServiceList.type, removeFromServiceList.type, addScheduleToService.type, removeServiceSchedule.type];
+    const cartActions = [addToCart.type, removeFromCart.type];
 
     if (giftActions.includes(action.type)
         || productActions.includes(action.type)
-        || serviceActions.includes(action.type)) {
+        || serviceActions.includes(action.type)
+        || cartActions.includes(action.type)) {
         let updatedData;
 
         if (giftActions.includes(action.type)) {
@@ -24,6 +27,9 @@ export const localStorageMiddleware = (store) => (next) => (action) => {
         } else if (serviceActions.includes(action.type)) {
             updatedData = currentState.services.serviceItems;
             localStorage.setItem('services', JSON.stringify(updatedData));
+        } else if (cartActions.includes(action.type)) {
+            updatedData = currentState.cart.cartItems;
+            localStorage.setItem('cart', JSON.stringify(updatedData));
         }
     }
 

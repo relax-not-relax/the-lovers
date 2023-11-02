@@ -1,15 +1,17 @@
 import giftReducer from '../features/CreatePost/components/AddGift/giftSlice';
 import productReducer from '../features/CreatePost/components/AddProduct/productSlice';
 import serviceReducer from '../features/CreatePost/components/AddService/serviceSlice';
-import userReducer from '../features/Auth/userSlice'
+import userReducer from '../features/Auth/userSlice';
+import cartReducer from '../features/Cart/cartSlice'
 import { localStorageMiddleware } from './localStorageMiddleware';
-import { loadGiftFromLocalStorage, loadProductsFromLocalStorage, loadServicesFromLocalStorage } from './middleware';
+import { loadCartFromLocalStorage, loadGiftFromLocalStorage, loadProductsFromLocalStorage, loadServicesFromLocalStorage } from './middleware';
 const { configureStore } = require("@reduxjs/toolkit");
 
 const rootReducer = {
     gifts: giftReducer,
     products: productReducer,
     services: serviceReducer,
+    cart: cartReducer,
     user: userReducer,
 }
 
@@ -25,6 +27,10 @@ const initialServiceState = {
     serviceItems: loadServicesFromLocalStorage(),
 }
 
+const initialCartState = {
+    cartItems: loadCartFromLocalStorage(),
+};
+
 const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
@@ -37,6 +43,7 @@ const store = configureStore({
         gifts: initialGiftState,
         products: initialProductState,
         services: initialServiceState,
+        cart: initialCartState,
     }
 });
 

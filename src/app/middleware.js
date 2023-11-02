@@ -12,3 +12,8 @@ export const loadServicesFromLocalStorage = () => {
     const services = localStorage.getItem('services');
     return services ? JSON.parse(services) : [];
 };
+
+export const loadCartFromLocalStorage = () => {
+    const cart = localStorage.getItem('cart');
+    return cart ? JSON.parse(cart) : [];
+};

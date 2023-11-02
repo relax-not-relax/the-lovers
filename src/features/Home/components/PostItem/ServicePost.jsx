@@ -9,6 +9,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import ServiceItem from '../../../Home/components/ServiceItem';
 import reactApiOdata from '../../../../api/odata/reactApiOdata';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 dayjs.extend(relativeTime);
 
@@ -21,6 +22,7 @@ ServicePost.propTypes = {
 function ServicePost(props) {
 
     const { servicePost, service, userId } = props;
+    const history = useHistory();
 
     const [serviceItem, setServiceItem] = useState({});
     const [scheduleList, setScheduleList] = useState([]);
@@ -87,13 +89,23 @@ function ServicePost(props) {
         }
     }
 
+    const handlePostClick = () => {
+        history.push(`/feeds/post/${servicePost.PostId}`)
+    }
+
+    const handleProfileClick = () => {
+        history.push(`/profile/${servicePost.Owner.AccountId}`)
+    }
+
     return (
         <div>
             <Box className='servicePostCtn'>
                 <Box className='servicePostDiv'>
                     <Grid container spacing={2}>
                         <Grid item md={1} lg={1}>
-                            <Box className='imgDiv'>
+                            <Box className='imgDiv' onClick={handleProfileClick} style={{
+                                cursor: 'pointer'
+                            }}>
                                 <img
                                     src={servicePost.Owner.AvatarLink ? servicePost.Owner.AvatarLink : 'https://firebasestorage.googleapis.com/v0/b/voicespire-7162e.appspot.com/o/imgs%2F20231025013807461.png?alt=media&token=209b22c7-c184-48e9-8ce0-c657c5f66182'}
                                     alt=""
@@ -134,9 +146,25 @@ function ServicePost(props) {
                         </Typography>
                     </Box>
 
-                    <Box marginTop={5}>
-                        <ServiceItem item={serviceItem} schedules={scheduleList} />
-                    </Box>
+                    {servicePost.OwnerId !== userId && (
+                        <>
+                            <Box marginTop={5} onClick={handlePostClick} style={{
+                                cursor: 'pointer'
+                            }}>
+                                <ServiceItem item={serviceItem} schedules={scheduleList} />
+                            </Box>
+                        </>
+                    )}
+
+
+                    {servicePost.OwnerId === userId && (
+                        <>
+                            <Box marginTop={5}>
+                                <ServiceItem item={serviceItem} schedules={scheduleList} />
+                            </Box>
+                        </>
+                    )}
+
                 </Box>
             </Box>
         </div>

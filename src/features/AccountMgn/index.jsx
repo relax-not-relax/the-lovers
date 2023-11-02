@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, Divider, Grid, Typography } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, Divider, Grid, LinearProgress, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 //import PropTypes from 'prop-types';
 import './style.scss';
@@ -12,9 +12,10 @@ import * as yup from 'yup';
 import DefaultValueField from '../../components/form-controls/DefaultValueField';
 import OnlyDateField from '../../components/form-controls/OnlyDateField';
 import StorageKeys from '../../constants/storage-keys';
-import userAPI from '../../api/userApi';
+//import userAPI from '../../api/userApi';
 import { useDispatch } from 'react-redux';
 import { updateInformation } from '../Auth/userSlice';
+import userAPIv2 from '../../api/userApiv2';
 
 AccountMgnFeature.propTypes = {
 
@@ -71,7 +72,7 @@ function AccountMgnFeature(props) {
                     "Content-Type": "multipart/form-data",
                 };
 
-                const response = await axios.post("https://beprn231catdoglover20231017210252.azurewebsites.net/api/FireBase/UploadImageFile", image, { headers });
+                const response = await axios.post("https://beprn231catdoglover20231030132717.azurewebsites.net/api/FireBase/UploadImageFile", image, { headers });
 
                 if (response.status === 200) {
                     setAvatar(response.data);
@@ -143,25 +144,26 @@ function AccountMgnFeature(props) {
     //const [error, setError] = useState('');
 
     const handleSubmit = async (values) => {
-        console.log({
-            ...values,
-            dateOfBirth: values.dateOfBirth.toString(),
-            description: description,
-            avatarLink: avatar,
-        });
+        // console.log({
+        //     ...values,
+        //     dateOfBirth: values.dateOfBirth.toString(),
+        //     description: description,
+        //     avatarLink: avatar,
+        // });
 
         try {
             const request = {
-                AccountId: values.accountId,
-                Email: values.email,
-                FullName: values.fullName,
-                DateOfBirth: values.dateOfBirth.toString(),
-                Phone: values.phone,
-                Address: values.address,
-                AvatarLink: avatar,
-                Description: description,
+                accountId: loginUser.accountId,
+                email: values.email,
+                fullName: values.fullName,
+                dateOfBirth: dateFormat(values.dateOfBirth, "isoUtcDateTime"),
+                phone: values.phone,
+                address: values.address,
+                avatarLink: avatar,
+                description: description,
             }
-            await userAPI.updateProfile(request);
+            console.log(request);
+            await userAPIv2.updateProfile(request);
             const action = updateInformation(request);
             await dispatch(action);
             window.location.reload();
@@ -171,10 +173,12 @@ function AccountMgnFeature(props) {
         }
     }
 
+    const { isSubmitting } = form.formState;
 
     return (
         <Box className='accountMgnDiv'>
             <Box className='accountMgnDiv__edit'>
+                {isSubmitting && <LinearProgress className='form__pg' />}
                 <form onSubmit={form.handleSubmit(handleSubmit)}>
                     <Box>
                         <Grid container>

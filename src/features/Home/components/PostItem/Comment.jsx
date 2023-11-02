@@ -1,11 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import SendIcon from '@mui/icons-material/Send';
 import { Alert, AlertTitle, Box, Button, Grid, LinearProgress } from '@mui/material';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import commentAPI from '../../../../api/comment';
 import InputField from '../../../../components/form-controls/InputField';
 import './style.scss';
 
@@ -31,9 +31,6 @@ function Comment(props) {
     const handleSubmit = async (values) => {
         //console.log(values);
         try {
-            const headers = {
-                "Content-Type": "application/json",
-            };
             const request = {
                 giftCommentId: 0,
                 giftId: giftId,
@@ -45,13 +42,12 @@ function Comment(props) {
                 account: null,
             }
             //console.log(request);
-            const response = await axios.post("https://beprn231cardogloverodata20231024085350.azurewebsites.net/GiftComments", request, headers);
-            if (response.status === 201) {
-                setError('')
-                setSuccess('Yay! You may be the owner of this gift');
-            }
+            await commentAPI.add(request);
+            setError('')
+            setSuccess('Yay! You may be the owner of this gift');
 
         } catch (error) {
+            setSuccess('');
             setError('You have already commented on this gift')
         }
     }

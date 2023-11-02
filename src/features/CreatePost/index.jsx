@@ -1,4 +1,4 @@
-import { Box, Button, LinearProgress, Typography } from '@mui/material';
+import { Alert, AlertTitle, Box, Button, LinearProgress, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 //import PropTypes from 'prop-types';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -143,8 +143,11 @@ function CreateFeature(props) {
             "type": valueType,
             "owner": null,
             "gifts": giftList,
+            "reacted": null,
+            "numberOfReact": 0,
             "products": [null],
             "services": [null],
+            "reacts": null
         }
     }
 
@@ -156,6 +159,8 @@ function CreateFeature(props) {
             "type": valueType,
             "owner": null,
             "gifts": null,
+            "reacted": null,
+            "numberOfReact": 0,
             "products": productList.map((product) => (
                 {
                     itemId: "",
@@ -183,6 +188,8 @@ function CreateFeature(props) {
             "type": valueType,
             "gifts": null,
             "products": null,
+            "reacted": null,
+            "numberOfReact": 0,
             "services": [
                 {
                     serviceId: "",
@@ -208,6 +215,8 @@ function CreateFeature(props) {
         }
     }
 
+    const [error, setError] = useState('');
+
     const handlePostSubmit = async (values) => {
 
         if (flag === true) {
@@ -220,6 +229,7 @@ function CreateFeature(props) {
                     await postAPI.add(request);
                     const action = removeGiftPackage();
                     await dispatch(action);
+                    setError('');
                     window.location.href = '/posts';
 
                     //console.log(request);
@@ -231,6 +241,7 @@ function CreateFeature(props) {
                     await postAPI.add(request);
                     const action = removeProductList();
                     await dispatch(action);
+                    setError('');
                     window.location.href = '/posts';
                 }
 
@@ -240,10 +251,17 @@ function CreateFeature(props) {
                     await postAPI.add(request);
                     const action = removeFromServiceList();
                     await dispatch(action);
+                    setError('');
                     window.location.href = '/posts';
                 }
 
             } catch (error) {
+                if (error.code === 'ERR_BAD_REQUEST') {
+                    setError('Your schedulers may be overlapping!');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                }
                 console.log('Failed to create a post', error);
             }
         }
@@ -435,6 +453,20 @@ function CreateFeature(props) {
                     </Button>
                 </Box>
             </form>
+            {error !== '' && (
+                <>
+                    <Box style={{
+                        marginTop: '20px',
+                        padding: '0 200px'
+                    }}>
+                        <Alert severity="error">
+                            <AlertTitle>Error</AlertTitle>
+                            Invalid Scheduler — <strong>{error}</strong>
+                        </Alert>
+                    </Box>
+                </>
+            )}
+
         </Box>
     );
 }

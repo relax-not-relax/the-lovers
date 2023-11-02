@@ -62,7 +62,7 @@ function Sidebar() {
                                 //className={`row ${isActive ? 'active' : ''}`}
                                 id={isActive ? 'active' : ''}
                                 onClick={() => {
-                                    window.location.pathname = val.link;
+                                    history.push(`${val.link}`);
                                 }}
                             >
                                 <div className='icon'>{val.icon}</div>

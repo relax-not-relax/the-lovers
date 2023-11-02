@@ -20,6 +20,7 @@ export const login = createAsyncThunk(
         const data = await userAPI.login(payload);
 
         localStorage.setItem(StorageKeys.TOKEN, data.accessToken);
+        localStorage.setItem(StorageKeys.REFRESH, data.refreshToken);
         localStorage.setItem(StorageKeys.USER, JSON.stringify(data.account));
 
         //return user data
@@ -39,6 +40,7 @@ const userSlice = createSlice({
             //clear local storage
             localStorage.removeItem(StorageKeys.USER);
             localStorage.removeItem(StorageKeys.TOKEN);
+            localStorage.removeItem(StorageKeys.REFRESH);
 
             state.current = {};
         },
@@ -66,6 +68,9 @@ const userSlice = createSlice({
                 avatarLink: avatarLink || currentUser.avatarLink,
                 description: description || currentUser.description,
             };
+
+            const updatedUser = { ...currentUser, ...state.current };
+            localStorage.setItem(StorageKeys.USER, JSON.stringify(updatedUser));
         }
     },
     extraReducers: {

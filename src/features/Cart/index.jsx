@@ -11,21 +11,6 @@ CartFeature.propTypes = {
 function CartFeature(props) {
 
     //const [cartList, setCartList] = useState([]);
-
-    const cartListTmp = [
-        {
-            name: "Happy Hour",
-            category: "Dog's Food",
-            price: 120000
-        },
-        {
-            name: "Melly",
-            category: "Cat's Food",
-            price: 150000
-        },
-
-    ];
-
     //setCartList(cartListTmp);
 
     return (
@@ -39,7 +24,7 @@ function CartFeature(props) {
                 <Grid container spacing={2}>
                     <Grid item md={8} lg={8} className='leftDivCart'>
                         <Box className='cartList'>
-                            <CartList cartList={cartListTmp} />
+                            <CartList />
                         </Box>
                     </Grid>
                     <Grid item md={4} lg={4}>
