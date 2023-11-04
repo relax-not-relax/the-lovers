@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import categoryApiOdata from '../../../../api/odata/categoryApiOdata';
 import { Box, Button, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import categoryApiOdata from '../../../../api/odata/categoryApiOdata';
 import { formatPrice } from '../../../../utils';
+import { addToCart } from '../../../Cart/cartSlice';
 
 ProductDetail.propTypes = {
     product: PropTypes.object,
@@ -29,6 +29,18 @@ function ProductDetail(props) {
         })()
     }, [product.CategoryId]);
 
+
+    const dispatch = useDispatch();
+
+    const handleAddToCart = async () => {
+        const action = addToCart({
+            id: product.ProductId,
+            cartItem: product,
+            type: "product"
+        });
+        await dispatch(action);
+    }
+
     return (
         <Box className='productDiv'>
             <Box className='productDiv__img'>
@@ -43,11 +55,16 @@ function ProductDetail(props) {
                 </Typography>
             </Box>
 
-            <Box>
-                <Button fullWidth variant='contained' className='acceptBtn' >
-                    Add to cart
-                </Button>
-            </Box>
+            {product.Status === true && (
+                <>
+                    <Box>
+                        <Button fullWidth variant='contained' className='acceptBtn' onClick={handleAddToCart}>
+                            Add to cart
+                        </Button>
+                    </Box>
+                </>
+            )}
+
         </Box>
     );
 }

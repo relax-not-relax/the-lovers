@@ -1,0 +1,28 @@
+.menuDiv {
+  display: flex;
+  flex-flow: row nowrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 0 !important;
+  list-style-type: none;
+
+  li {
+    padding: 16px 32px !important;
+
+    a {
+      color: #ccc;
+      text-decoration: none !important;
+      font-size: 18px !important;
+    }
+
+    a.active {
+      color: #1976d2;
+      text-decoration: none !important;
+      font-weight: 500;
+      font-size: 18px !important;
+      background: #b1d8ff56;
+      padding: 10px 15px !important;
+      border-radius: 10px;
+    }
+  }
+}

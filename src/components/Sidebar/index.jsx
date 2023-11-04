@@ -1,13 +1,14 @@
-import { Box } from '@mui/material';
-import React from 'react';
-import logo from '../../images/logo.png';
 import LogoutIcon from '@mui/icons-material/Logout';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import { Badge, Box } from '@mui/material';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom';
+import { logout } from '../../features/Auth/userSlice';
+import { cartItemsCountSelector } from '../../features/Cart/selector';
+import logo from '../../images/logo.png';
 import { SidebarData } from './SidebarData';
 import './style.scss';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../features/Auth/userSlice';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 
 function Sidebar() {
@@ -38,12 +39,17 @@ function Sidebar() {
     const location = useLocation();
     const dispatch = useDispatch();
     const history = useHistory();
+    const cartItemsCount = useSelector(cartItemsCountSelector);
 
     const handleLogout = () => {
         const action = logout();
         dispatch(action);
         history.push('/login');
         window.location.reload();
+    };
+
+    const handleCartClick = () => {
+        history.push('/cart');
     };
 
     return (
@@ -70,7 +76,15 @@ function Sidebar() {
                             </li>
                         );
                     })}
-                    <li className='row' style={{ marginTop: '120px' }} onClick={handleLogout}>
+                    <li className='row' onClick={handleCartClick}>
+                        <div className='icon'>
+                            <Badge badgeContent={cartItemsCount} color="error">
+                                <ShoppingBasketIcon fontSize='large' />
+                            </Badge>
+                        </div>
+                        <div className='title'>Cart</div>
+                    </li>
+                    <li className='row' style={{ marginTop: '180px' }} onClick={handleLogout}>
                         <div className='icon'>
                             <LogoutIcon />
                         </div>

@@ -8,6 +8,7 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import dateFormat from "dateformat";
 import { formatPrice } from '../../../../utils';
 import { ShoppingCart } from '@mui/icons-material';
+import ScheduleAdd from './ScheduleAdd';
 
 ServiceList.propTypes = {
     service: PropTypes.object
@@ -76,7 +77,12 @@ function ServiceList(props) {
                                 </Grid>
 
                                 <Grid item md={4} lg={4} className='addToCartDiv'>
-                                    <ShoppingCart />
+                                    {schedule.Status === true && (
+                                        <>
+                                            <ScheduleAdd schedule={schedule} />
+                                        </>
+                                    )}
+
                                 </Grid>
                             </Grid>
 

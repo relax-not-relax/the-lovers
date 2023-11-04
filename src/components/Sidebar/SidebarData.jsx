@@ -1,9 +1,7 @@
-import ChatIcon from '@mui/icons-material/Chat';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import FeedIcon from '@mui/icons-material/Feed';
 import HomeIcon from '@mui/icons-material/Home';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import React from 'react';
 
 
@@ -19,24 +17,14 @@ export const SidebarData = [
         link: "/posts",
     },
     {
-        title: "My Cart",
-        icon: <ShoppingBasketIcon fontSize='large' />,
-        link: "/cart",
-    },
-    {
-        title: "Notifications",
-        icon: <NotificationsIcon fontSize='large' />,
-        link: "/notifications",
-    },
-    {
-        title: "Messages",
-        icon: <ChatIcon fontSize='large' />,
-        link: "/messages",
-    },
-    {
         title: "Create",
         icon: <AddCircleIcon fontSize='large' />,
         link: "/create",
+    },
+    {
+        title: "My Orders",
+        icon: <ShoppingCartCheckoutIcon fontSize='large' />,
+        link: "/orders",
     },
 
 ]; 

@@ -23,16 +23,20 @@ const cartSlice = createSlice({
             //newItem = { id, product, quantity }
             const newItem = action.payload;
             const updatedCart = [...state.cartItems];
-            //const index = updatedCart.findIndex((x) => x.id === newItem.id);
-            updatedCart.push(newItem);
+            const index = updatedCart.findIndex((x) => x.id === newItem.id);
+            if (index < 0) {
+                updatedCart.push(newItem);
+            }
             state.cartItems = updatedCart;
             saveCartToLocalStorage(updatedCart);
         },
 
         removeFromCart(state, action) {
             const idNeedToRemove = action.payload.idNeedToRemove;
+            console.log(idNeedToRemove);
             const updatedCart = [...state.cartItems];
-            const newCart = updatedCart.filter((x) => x.id !== Number.parseInt(idNeedToRemove));
+            const newCart = updatedCart.filter((x) => x.id !== idNeedToRemove);
+            console.log(newCart);
             state.cartItems = newCart;
             saveCartToLocalStorage(newCart);
         }

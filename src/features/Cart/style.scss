@@ -1,6 +1,6 @@
 .cartSection {
-  width: 1000px !important;
-  min-height: 100vh !important;
+  min-height: 100vh;
+  width: 900px !important;
   padding: 50px 35px !important;
 
   &__header {
@@ -17,5 +17,35 @@
   }
 
   &__view {
+    .cartPriceDetail {
+      margin-top: 20px !important;
+      border: 1px solid #ccc !important;
+      padding: 20px !important;
+      border-radius: 10px !important;
+
+      .rightDivCart {
+        &__total {
+          &-hd {
+            font-size: 16px !important;
+            color: #7a7a7a;
+          }
+
+          &-price {
+            font-size: 25px !important;
+            text-align: end;
+            color: #fd4d4d !important;
+            font-weight: 500 !important;
+          }
+        }
+
+        &__btn {
+          padding-top: 30px !important;
+
+          &-dt {
+            text-decoration: none !important;
+          }
+        }
+      }
+    }
   }
 }

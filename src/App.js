@@ -6,9 +6,11 @@ import AccountMgnFeature from './features/AccountMgn';
 import LoginFeature from './features/Auth/components/Login';
 import RegisterFeature from './features/Auth/components/Register';
 import CartFeature from './features/Cart';
+import CheckoutFeature from './features/Checkout';
 import CreateFeature from './features/CreatePost';
 import HomeFeature from './features/Home';
 import MyPostsFeature from './features/MyPosts';
+import OrdersFeature from './features/Orders';
 import UserViewFeature from './features/UserView';
 
 function App() {
@@ -28,6 +30,8 @@ function App() {
           <Route path='/cart' component={CartFeature} />
           <Route path='/posts' component={MyPostsFeature} />
           <Route path='/profile' component={UserViewFeature} />
+          <Route path='/orders' component={OrdersFeature} />
+          <Route path='/checkout' component={CheckoutFeature} />
         </Switch>
         <Profile />
       </div>

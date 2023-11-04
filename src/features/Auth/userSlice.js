@@ -41,6 +41,7 @@ const userSlice = createSlice({
             localStorage.removeItem(StorageKeys.USER);
             localStorage.removeItem(StorageKeys.TOKEN);
             localStorage.removeItem(StorageKeys.REFRESH);
+            localStorage.removeItem('cart');
 
             state.current = {};
         },

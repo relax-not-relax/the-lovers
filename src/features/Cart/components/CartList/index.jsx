@@ -11,12 +11,18 @@ CartList.propTypes = {
 function CartList(props) {
 
     const { cartList } = props;
+    //console.log(cartList);
 
     return (
-        <Box>
+        <Box style={{
+            marginTop: '20px',
+            border: '1px solid #ccc',
+            padding: '0 30px',
+            borderRadius: '10px',
+        }}>
             {cartList.map((item, idx) => (
                 <Box key={idx}>
-                    <CartItem />
+                    <CartItem item={item} />
                 </Box>
             ))}
         </Box>

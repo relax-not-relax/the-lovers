@@ -1,8 +1,12 @@
-import { ShoppingBasket, ShoppingCart } from '@mui/icons-material';
-import { Box, Grid, Paper, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import { ShoppingCart } from '@mui/icons-material';
+import { Box, Button, Grid, Paper, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
+import CartList from '../Cart/components/CartList';
+import { cartTotalSelector } from './selector';
 import './style.scss';
-import CartList from '../Cart/components/CartList'
+
 
 CartFeature.propTypes = {
 
@@ -10,8 +14,19 @@ CartFeature.propTypes = {
 
 function CartFeature(props) {
 
-    //const [cartList, setCartList] = useState([]);
-    //setCartList(cartListTmp);
+    const cartTotal = useSelector(cartTotalSelector);
+
+    const [cart, setCart] = useState([]);
+
+    useEffect(() => {
+        const getCartFromLocalStorage = () => {
+            const cart = localStorage.getItem('cart');
+            return cart ? JSON.parse(cart) : [];
+        };
+
+        const cartFromLocalStorage = getCartFromLocalStorage();
+        setCart(cartFromLocalStorage);
+    }, []);
 
     return (
         <Box className='cartSection'>
@@ -24,12 +39,32 @@ function CartFeature(props) {
                 <Grid container spacing={2}>
                     <Grid item md={8} lg={8} className='leftDivCart'>
                         <Box className='cartList'>
-                            <CartList />
+                            <CartList cartList={cart} />
                         </Box>
                     </Grid>
                     <Grid item md={4} lg={4}>
                         <Box className='cartPriceDetail'>
-
+                            <Grid container className='rightDivCart__total'>
+                                <Grid item md={6} lg={6} style={{
+                                    display: 'flex',
+                                    alignItems: 'flex-end',
+                                    paddingBottom: '5px'
+                                }}>
+                                    <Typography className='rightDivCart__total-hd'>Total</Typography>
+                                </Grid>
+                                <Grid item md={6} lg={6} >
+                                    <Typography className='rightDivCart__total-price'>
+                                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(cartTotal)}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                            <Box className='rightDivCart__btn'>
+                                <NavLink className='rightDivCart__btn-dt' to='/checkout'>
+                                    <Button fullWidth style={{ padding: '15px 0', background: '#002070', color: '#fff' }}>
+                                        CHECKOUT
+                                    </Button>
+                                </NavLink>
+                            </Box>
                         </Box>
                     </Grid>
                 </Grid>
