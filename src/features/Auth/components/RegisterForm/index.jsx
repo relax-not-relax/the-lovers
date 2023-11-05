@@ -27,7 +27,10 @@ function RegisterForm(props) {
             .email('Please enter a valid email address'),
         password: yup.string()
             .required('Please enter your password')
-            .min(3, 'Please enter at least 3 characters'),
+            .matches(
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/,
+                'Password must include at least one lowercase letter, one uppercase letter, one number, and one special character. It should be 8-50 characters long.'
+            ),
         passwordConfirm: yup.string()
             .required('Please confirm your password')
             .oneOf([yup.ref('password'), 'Password does not match']),

@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import commentApiOdata from '../../../../api/odata/commentApiOdata';
+import giftAPI from '../../../../api/giftApi';
 import StorageKeys from '../../../../constants/storage-keys';
 import GiftGivenItem from './GiftGivenItem';
 import './style.scss';
@@ -21,18 +21,16 @@ function GiftGiven(props) {
 
             if (userDataFromLocalStorage) {
                 const parsedUserData = JSON.parse(userDataFromLocalStorage);
-                const params = {
-                    $filter: `(AccountId eq ${parsedUserData.accountId}) and (ApproveStatus eq 'accept')`
-                }
-                const response = await commentApiOdata.get(params);
-                setGiftList(response.value);
+                const response = await giftAPI.getGiftsGiven(parsedUserData.accountId);
+                console.log(response);
+                setGiftList(response);
             }
 
         })();
     }, [])
 
     return (
-        <Box>
+        <Box style={{ marginTop: '50px' }}>
             {giftList.map((item, idx) => (
                 <Box key={idx}>
                     <GiftGivenItem item={item} />

@@ -1,0 +1,69 @@
+.orderItemDiv {
+  margin-top: 20px !important;
+  &__dt {
+    padding: 20px 30px !important;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.068);
+    border-radius: 10px !important;
+
+    &__img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #ffe7e7 !important;
+      cursor: pointer !important;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .cate {
+      font-size: 14px !important;
+      color: #1f4172;
+      font-weight: 500 !important;
+      margin-top: 5px;
+    }
+
+    .des {
+      font-size: 13px !important;
+      font-weight: 300 !important;
+    }
+  }
+
+  .inlineDiv {
+    .imgDiv {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #ffe7e7 !important;
+      cursor: pointer !important;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .nameDiv {
+      display: flex !important;
+      justify-content: flex-start !important;
+      align-items: center !important;
+      cursor: pointer;
+
+      .name {
+        font-size: 15px !important;
+        transition: 0.25s ease-in-out !important;
+
+        &:hover {
+          color: #38b4fc !important;
+        }
+      }
+    }
+  }
+}

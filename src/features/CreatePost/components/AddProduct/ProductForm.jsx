@@ -79,7 +79,7 @@ function ProductForm(props) {
                 "Content-Type": "multipart/form-data",
             };
 
-            const response = await axios.post("https://beprn231catdoglover20231030132717.azurewebsites.net/api/FireBase/UploadImageFile", image, { headers });
+            const response = await axios.post("https://beprn231catdoglover20231105200231.azurewebsites.net/api/FireBase/UploadImageFile", image, { headers });
 
             if (response.status === 200) {
                 console.log(response.data);

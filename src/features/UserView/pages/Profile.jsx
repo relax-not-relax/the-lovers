@@ -108,6 +108,12 @@ function Profile(props) {
                                 <span style={{ fontWeight: '500' }}>{count}</span>  posts
                             </p>
                             <Typography>{user.description}</Typography>
+                            <p style={{
+                                fontSize: '16px',
+                                marginTop: '0'
+                            }}>
+                                <span style={{ fontWeight: '500' }}>Contact:</span>  {user.phone}
+                            </p>
                         </Box>
                     </Grid>
                 </Grid>

@@ -258,9 +258,9 @@ function CreateFeature(props) {
             } catch (error) {
                 if (error.code === 'ERR_BAD_REQUEST') {
                     setError('Your schedulers may be overlapping!');
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 2000);
+                    // setTimeout(() => {
+                    //     window.location.reload();
+                    // }, 2000);
                 }
                 console.log('Failed to create a post', error);
             }

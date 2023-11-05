@@ -35,4 +35,13 @@
       align-items: center;
     }
   }
+
+  .authorName {
+    cursor: pointer !important;
+    transition: 0.25s ease-in-out !important;
+
+    &:hover {
+      color: #38b4fc !important;
+    }
+  }
 }

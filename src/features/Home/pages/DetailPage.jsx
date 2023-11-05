@@ -1,7 +1,7 @@
 import React from 'react';
 //import PropTypes from 'prop-types';
 import { Box, LinearProgress, Typography } from '@mui/material';
-import { useRouteMatch } from 'react-router-dom/cjs/react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom/cjs/react-router-dom';
 import '../style.scss';
 import usePostDetail from '../hooks/usePostDetail';
 import dateFormat from "dateformat";
@@ -19,6 +19,7 @@ function DetailPage(props) {
         params: { postId },
 
     } = useRouteMatch();
+    const history = useHistory();
 
     const { post, loading } = usePostDetail(postId);
 
@@ -28,6 +29,10 @@ function DetailPage(props) {
         </Box>
     }
 
+    const handleUserClick = () => {
+        history.push(`/profile/${post.Owner.AccountId}`);
+    }
+
     return (
         <Box className='postDetailSection'>
             <Typography className='title'>{post.Title}</Typography>
@@ -35,9 +40,12 @@ function DetailPage(props) {
             <p style={{
                 margin: '0',
                 fontSize: '15px'
-            }}><span style={{
-                fontWeight: 500,
-            }}>Author: </span>{post.Owner.FullName}</p>
+            }} className='authorName' onClick={handleUserClick}>
+                <span style={{
+                    fontWeight: 500,
+                }}>Author:
+                </span> {post.Owner.FullName}
+            </p>
             <Typography className='content'>{post.Content}</Typography>
 
             {post.Type === 'gift' && (

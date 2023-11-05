@@ -1,0 +1,86 @@
+.giftGivenDiv {
+  padding: 20px 30px !important;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.068);
+  border-radius: 10px !important;
+  margin-bottom: 30px !important;
+  .ownerDiv {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .contentDiv {
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+
+    .content {
+      font-size: 15px !important;
+      font-style: italic !important;
+    }
+  }
+
+  .giftDetail {
+    padding: 15px 30px !important;
+    background: #fdf0f0 !important;
+    margin-top: 30px !important;
+    border-radius: 8px !important;
+
+    .imageDiv {
+      width: 150px;
+      height: 150px;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .authorDiv {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .nameDiv {
+      display: flex !important;
+      justify-content: flex-start !important;
+      align-items: center !important;
+      cursor: pointer;
+      transition: 0.25s ease-in-out !important;
+
+      .name {
+        font-size: 15px !important;
+
+        &:hover {
+          color: #38b4fc !important;
+        }
+      }
+    }
+
+    .title {
+      font-size: 20px !important;
+      font-weight: 500 !important;
+      color: #203264 !important;
+    }
+
+    .des {
+      font-size: 14px !important;
+      font-weight: 300 !important;
+    }
+  }
+}

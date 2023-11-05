@@ -19,7 +19,7 @@ function OrderMenu(props) {
             </li>
 
             <li>
-                <Link component={NavLink} to={`${url}/sells`} exact>Product Seller</Link>
+                <Link component={NavLink} to={`${url}/sells`} exact>Item Seller</Link>
             </li>
 
             <li>
