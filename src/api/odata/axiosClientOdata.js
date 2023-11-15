@@ -3,7 +3,7 @@ import axios from "axios";
 const access_token = localStorage.getItem('access_token');
 
 const axiosClientOdata = axios.create({
-    baseURL: 'https://beprn231cardogloverodata20231105200328.azurewebsites.net//odata/',
+    baseURL: 'https://beprn231cardogloverodata20231105200328.azurewebsites.net/odata/',
     headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${access_token}`

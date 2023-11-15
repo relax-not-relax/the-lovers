@@ -33,19 +33,19 @@ function PostList(props) {
         <Box>
             {data.map((post) => (
                 <Box key={post.PostId}>
-                    {(post.Type === 'gift' && loginUser.accountId !== post.OwnerId) && (
+                    {(post.Type === 'gift' && loginUser.accountId !== post.OwnerId && post.Status === true) && (
                         <>
                             <GiftPost giftPost={post} userId={loginUser.accountId} />
                         </>
                     )}
 
-                    {(post.Type === 'product' && loginUser.accountId !== post.OwnerId) && (
+                    {(post.Type === 'product' && loginUser.accountId !== post.OwnerId && post.Status === true) && (
                         <>
                             <ProductPost productPost={post} userId={loginUser.accountId} />
                         </>
                     )}
 
-                    {(post.Type === 'service' && loginUser.accountId !== post.OwnerId) && (
+                    {(post.Type === 'service' && loginUser.accountId !== post.OwnerId && post.Status === true) && (
                         <>
                             <ServicePost servicePost={post} service={post.Services[0]} userId={loginUser.accountId} />
                         </>

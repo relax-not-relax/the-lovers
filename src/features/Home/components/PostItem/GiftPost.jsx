@@ -1,15 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Box, Grid, Typography } from '@mui/material';
-import './style.scss';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import GiftItem from '../Gifttem';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import reactApiOdata from '../../../../api/odata/reactApiOdata';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+import reactApiOdata from '../../../../api/odata/reactApiOdata';
+import GiftItem from '../Gifttem';
+import './style.scss';
 
 dayjs.extend(relativeTime)
 

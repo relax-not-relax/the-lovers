@@ -1,0 +1,148 @@
+/*# sourceMappingURL=style.css.map */ow: row nowrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 0 !important;
+  list-style-type: none;
+}
+.menuDiv li {
+  padding: 16px 32px !important;
+}
+.menuDiv li a {
+  color: #ccc;
+  text-decoration: none !important;
+  font-size: 18px !important;
+}
+.menuDiv li a.active {
+  color: #1976d2;
+  text-decoration: none !important;
+  font-weight: 500;
+  font-size: 18px !important;
+  background: rgba(177, 216, 255, 0.337254902);
+  padding: 10px 15px !important;
+  border-radius: 10px;
+}/*# sourceMappingURL=style.css.map */tant;
+  font-style: italic !important;
+}
+.giftGivenDiv .giftDetail {
+  padding: 15px 30px !important;
+  background: #fdf0f0 !important;
+  margin-top: 30px !important;
+  border-radius: 8px !important;
+}
+.giftGivenDiv .giftDetail .imageDiv {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+}
+.giftGivenDiv .giftDetail .imageDiv img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.giftGivenDiv .giftDetail .authorDiv {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.giftGivenDiv .giftDetail .authorDiv img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.giftGivenDiv .giftDetail .nameDiv {
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  cursor: pointer;
+  transition: 0.25s ease-in-out !important;
+}
+.giftGivenDiv .giftDetail .nameDiv .name {
+  font-size: 15px !important;
+}
+.giftGivenDiv .giftDetail .nameDiv .name:hover {
+  color: #38b4fc !important;
+}
+.giftGivenDiv .giftDetail .title {
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  color: #203264 !important;
+}
+.giftGivenDiv .giftDetail .des {
+  font-size: 14px !important;
+  font-weight: 300 !important;
+}/*# sourceMappingURL=style.css.map */x !important;
+  color: #838383 !important;
+}
+.productPostDiv .reaction {
+  display: flex !important;
+  align-items: center !important;
+}
+.productPostDiv .reaction .active {
+  color: #d80032 !important;
+}
+.productPostDiv .reaction .notActive {
+  color: #ccc !important;
+}
+.productPostDiv .content .header {
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  color: #132043 !important;
+}
+.productPostDiv .content .detail {
+  font-size: 15px !important;
+  font-weight: 300 !important;
+}
+
+.servicePostDiv {
+  padding: 30px 20px !important;
+  margin: 40px 0 !important;
+  background: #fdf6f6 !important;
+  border-radius: 15px !important;
+}
+.servicePostDiv .imgDiv {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.servicePostDiv .imgDiv img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.servicePostDiv .title {
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+}
+.servicePostDiv .title .userName {
+  font-size: 15px !important;
+  font-weight: 500 !important;
+}
+.servicePostDiv .title .createAt {
+  font-size: 14px !important;
+  color: #838383 !important;
+}
+.servicePostDiv .reaction {
+  display: flex !important;
+  align-items: center !important;
+}
+.servicePostDiv .reaction .active {
+  color: #d80032 !important;
+}
+.servicePostDiv .reaction .notActive {
+  color: #ccc !important;
+}
+.servicePostDiv .content .header {
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  color: #132043 !important;
+}
+.servicePostDiv .content .detail {
+  font-size: 15px !important;
+  font-weight: 300 !important;
+}/*# sourceMappingURL=style.css.map */

@@ -131,9 +131,11 @@ function CreateFeature(props) {
 
     const [flag, setFlag] = useState(false);
 
-    useEffect(() => {
-        setFlag(false);
-    }, []);
+    // useEffect(() => {
+    //     setFlag(false);
+    // }, []);
+    //var flag = false;
+
 
     const giftRequest = (values) => {
         return {
@@ -219,6 +221,8 @@ function CreateFeature(props) {
 
     const handlePostSubmit = async (values) => {
 
+        console.log(flag);
+
         if (flag === true) {
 
             try {
@@ -257,7 +261,7 @@ function CreateFeature(props) {
 
             } catch (error) {
                 if (error.code === 'ERR_BAD_REQUEST') {
-                    setError('Your schedulers may be overlapping!');
+                    setError(error.response.data.message);
                     // setTimeout(() => {
                     //     window.location.reload();
                     // }, 2000);
@@ -300,10 +304,15 @@ function CreateFeature(props) {
         console.log("Service submit: ", serviceItem);
         const action = addToServiceList(serviceItem);
         dispatch(action);
+        console.log("Add service: ", flag);
     }
 
     const handleAddSchedule = (values) => {
+        // if (flag === true) {
+        //     setFlag(false);
+        // }
         setFlag(false);
+        console.log("Add Scheduler: ", flag);
         console.log("Schedule submit: ", values);
         const scheduleItem = {
             index: 0,
@@ -313,6 +322,8 @@ function CreateFeature(props) {
         };
         const action = addScheduleToService(scheduleItem);
         dispatch(action);
+        //setFlag(false);
+        console.log("Add Scheduler: ", flag);
     }
 
     const { isSubmitting } = form.formState;
